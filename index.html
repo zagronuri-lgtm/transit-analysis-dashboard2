@@ -4,43 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>מערכת ניתוח זמני תקן (Offline-First)</title>
-
   <style>
     :root{
       --bg:#ffffff;
       --card:#ffffff;
-      --text:#111827;     /* שחור */
+      --text:#111827;
       --muted:#4b5563;
       --line:rgba(17,24,39,.14);
       --accent:#7c3aed;
-      --accent2:#16a34a;
+      --accent2:#22c55e;
       --warn:#f59e0b;
       --bad:#ef4444;
       --good:#10b981;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
-
     *{box-sizing:border-box}
     body{
-      margin:0;
-      font-family:var(--font);
-      background:var(--bg);
+      margin:0; font-family:var(--font);
+      background:#ffffff;
       color:var(--text);
       min-height:100vh;
     }
-    a{color:var(--accent)}
+    a{color:#5b21b6}
     .wrap{max-width:1200px;margin:0 auto;padding:18px}
-
     header{
       display:flex;gap:12px;align-items:center;justify-content:space-between;
       padding:16px 16px;border:1px solid var(--line);border-radius:18px;
-      background:#fff;
+      background:#ffffff;
       box-shadow: 0 10px 24px rgba(17,24,39,.08);
     }
     .title h1{margin:0;font-size:22px;letter-spacing:.2px}
     .title p{margin:6px 0 0;color:var(--muted);font-size:13px}
-
     .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:10px 12px;border-radius:14px;border:1px solid var(--line);
@@ -52,9 +47,8 @@
     @media(min-width:980px){ .grid.cols2{grid-template-columns:1.2fr .8fr} }
     @media(min-width:980px){ .grid.cols3{grid-template-columns:1fr 1fr 1fr} }
     @media(min-width:980px){ .grid.cols4{grid-template-columns:repeat(4, 1fr)} }
-
     .card{
-      background:#fff;
+      background:#ffffff;
       border:1px solid var(--line);
       border-radius:18px;
       padding:14px;
@@ -63,39 +57,38 @@
     .card h2{margin:0 0 10px;font-size:15px}
     .muted{color:var(--muted)}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-
     .btn{
       cursor:pointer;
-      border:1px solid var(--line);
-      background:#fff;
-      color:var(--text);
+      border:1px solid rgba(17,24,39,.18);
+      background:#ffffff;
+      color:#111827;
       padding:10px 12px;
       border-radius:14px;
       font-weight:800;
-      transition: transform .08s ease, background .12s ease, border-color .12s ease;
+      transition: transform .08s ease, background .12s ease, box-shadow .12s ease;
       user-select:none;
+      box-shadow: 0 4px 10px rgba(17,24,39,.06);
+      text-decoration:none;
     }
     .btn:hover{background:#f9fafb}
     .btn:active{transform: translateY(1px)}
     .btn.primary{background: rgba(124,58,237,.10); border-color: rgba(124,58,237,.35)}
-    .btn.green{background: rgba(22,163,74,.10); border-color: rgba(22,163,74,.35)}
+    .btn.green{background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.35)}
     .btn.red{background: rgba(239,68,68,.10); border-color: rgba(239,68,68,.35)}
     .btn.small{padding:7px 10px;border-radius:12px;font-size:12px}
-
     .drop{
       padding:18px;
       border-radius:18px;
-      border:2px dashed rgba(17,24,39,.18);
-      background:#fff;
+      border:2px dashed rgba(17,24,39,.20);
+      background:#ffffff;
       text-align:center;
     }
-    .drop.drag{border-color: rgba(124,58,237,.8); background: rgba(124,58,237,.06)}
+    .drop.drag{border-color: rgba(124,58,237,.8); background:#f5f3ff}
     .drop p{margin:6px 0;color:var(--muted)}
-
     input, select{
-      background:#fff;
+      background:#ffffff;
       border:1px solid rgba(17,24,39,.20);
-      color:#111827; /* שחור בשדות */
+      color:#111827;
       border-radius:12px;
       padding:9px 10px;
       outline:none;
@@ -106,14 +99,13 @@
     label{font-size:12px;color:var(--muted);display:block;margin-bottom:6px}
     .field{min-width:170px}
     .mono{font-family:var(--mono)}
-
     .kpi{
       padding:12px;border-radius:18px;border:1px solid var(--line);
-      background:#fff;
+      background:#ffffff;
+      box-shadow: 0 10px 24px rgba(17,24,39,.06);
     }
     .kpi .v{font-size:22px;font-weight:900;line-height:1.1}
     .kpi .l{font-size:12px;color:var(--muted);margin-top:5px}
-
     .badge{
       display:inline-flex;align-items:center;gap:8px;
       padding:6px 10px;border-radius:999px;border:1px solid var(--line);
@@ -124,30 +116,24 @@
     .badge.bad{background:#fef2f2;border-color:#fecaca;color:#991b1b}
     .badge.warn{background:#fffbeb;border-color:#fde68a;color:#92400e}
     .badge.purp{background:#f5f3ff;border-color:#ddd6fe;color:#5b21b6}
-
     .tableWrap{overflow:auto;max-height:440px;border-radius:16px;border:1px solid var(--line)}
     table{width:100%;border-collapse:collapse;font-size:13px}
     th,td{padding:10px 10px;border-bottom:1px solid rgba(17,24,39,.08);text-align:right;white-space:nowrap}
     th{position:sticky;top:0;background:#f3f4f6;z-index:1;color:#111827}
     tr:hover td{background:#f9fafb}
-
     .twoCanv{display:grid;gap:12px}
     @media(min-width:980px){ .twoCanv{grid-template-columns:1fr 1fr} }
-    canvas{width:100%;height:280px;background:#fff;border:1px solid var(--line);border-radius:16px}
-
+    canvas{width:100%;height:280px;background:#ffffff;border:1px solid var(--line);border-radius:16px}
     .hr{height:1px;background: var(--line);margin:10px 0}
-    .hint{color:var(--muted);font-size:12px;line-height:1.6}
-    .smallNote{font-size:12px;color:var(--muted)}
-
     .modalBack{
       position:fixed;inset:0;display:none;align-items:center;justify-content:center;
-      background: rgba(0,0,0,.55);z-index:9999;padding:16px;
+      background: rgba(0,0,0,.35);z-index:9999;padding:16px;
     }
     .modal{
       width:min(980px, 100%);
       max-height: min(85vh, 900px);
       overflow:auto;
-      background:#fff;
+      background: #ffffff;
       border:1px solid rgba(17,24,39,.14);
       border-radius:18px;
       padding:16px;
@@ -157,18 +143,23 @@
     .modal p{color:var(--muted);line-height:1.55}
     .modal ul{color:var(--muted);line-height:1.6}
     .modal .x{float:left}
+    .hint{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.6
+    }
+    .smallNote{font-size:12px;color:var(--muted)}
   </style>
 </head>
-
 <body>
 <div class="wrap">
   <header>
     <div class="title">
       <h1>מערכת ניתוח זמני תקן — Offline-First 🚌</h1>
-      <p>טוען CSV מקומית, סינונים, ניקוי חריגים, אחוזונים דינמיים, Top-10 וייצוא.</p>
+      <p>טוען CSV מקומית (Drag&Drop או בחירה), סינונים, ניקוי חריגים, אחוזונים דינמיים, Top-10 בעייתיים/מצטיינים, וייצוא.</p>
     </div>
     <div class="row">
-      <div class="pill"><span class="mono">v23.1</span> <b>Offline</b></div>
+      <div class="pill"><span class="mono">v24</span> <b>קובץ אחד</b></div>
       <button id="btnHelp" class="btn primary">מדריך קצר</button>
     </div>
   </header>
@@ -178,12 +169,17 @@
       <h2>1) טעינת נתונים</h2>
       <div id="drop" class="drop">
         <div class="row" style="justify-content:center">
-          <button id="btnPick" class="btn green">בחר קבצים (Multiple)</button>
+          <!-- FIX: label-for-file (חסין יותר מכפתור+JS) -->
+          <label id="btnPick" for="file" class="btn green" style="display:inline-flex;align-items:center;justify-content:center;">
+            בחר קבצים (Multiple)
+          </label>
           <button id="btnReset" class="btn red">איפוס</button>
         </div>
         <p>אפשר לגרור לכאן קבצי CSV (אחד או יותר). כל הקבצים יתאחדו.</p>
-        <p class="smallNote">אם פתחת ב-Preview (Gmail/Drive) זה עלול לחסום JS. הורד למחשב ופתח ב-Chrome/Edge.</p>
-        <input id="file" type="file" accept=".csv,text/csv" multiple style="display:none"/>
+        <p class="smallNote">טיפ: אל תפתח ב־Preview של Gmail/Drive. הורד למחשב ופתח ב-Chrome/Edge.</p>
+
+        <input id="file" type="file" accept=".csv,text/csv" multiple
+               style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
       </div>
 
       <div id="loadState" class="row" style="margin-top:10px;display:none">
@@ -331,7 +327,7 @@
           </div>
         </div>
         <div class="field">
-          <label>החרגת טווחי תאריכים</label>
+          <label>החרגת טווחי תאריכים (למשל הפגנות/חורף)</label>
           <div class="row" style="gap:8px">
             <input id="exFrom" type="date"/>
             <input id="exTo" type="date"/>
@@ -361,6 +357,7 @@
         <button id="btnExportJSON" class="btn">JSON</button>
         <button id="btnExportYAML" class="btn">YAML</button>
       </div>
+      <div class="hint" style="margin-top:8px">✅ כל שינוי בסינונים/מדיניות/תאריכים מעדכן מיד את הטבלאות, הגרפים וה-Top10.</div>
     </div>
 
     <div class="grid cols4">
@@ -386,12 +383,12 @@
       <div class="card">
         <h2>4) היסטוגרם — התפלגות זמני נסיעה</h2>
         <canvas id="cvHist" width="900" height="280"></canvas>
-        <div class="hint">ציר X = זמן (דקות), ציר Y = כמות. הקו הסגול = תקן מומלץ.</div>
+        <div class="hint">ציר X = זמן נסיעה (דקות), ציר Y = כמות נסיעות בכל טווח. קו סגול = תקן מומלץ.</div>
       </div>
       <div class="card">
         <h2>5) מגמה לפי שעה — ממוצע מול תקן</h2>
         <canvas id="cvTrend" width="900" height="280"></canvas>
-        <div class="hint">ממוצע מול תקן לכל שעה. אם אין נתונים בשעה — יהיה ריק.</div>
+        <div class="hint">ממוצע (קו שחור) מול תקן (סגול) לכל שעה. אם אין נתונים בשעה — היא תישאר ריקה.</div>
       </div>
     </div>
 
@@ -404,13 +401,13 @@
               <tr>
                 <th>אשכול</th><th>מק״ט</th><th>קו</th><th>כיוון</th><th>חלון/שעה</th>
                 <th class="mono">N</th><th class="mono">Planned</th><th class="mono">CV</th>
-                <th class="mono">Rec</th><th class="mono">Gap</th><th class="mono">Risk</th>
+                <th>Rec</th><th class="mono">פער</th><th>Risk</th><th class="mono">חוסר</th>
               </tr>
             </thead>
             <tbody id="topWorst"></tbody>
           </table>
         </div>
-        <div class="hint">אם אין עמודת תכנון (Planned) בקבצים — הטבלה תישאר ריקה.</div>
+        <div class="hint">“חוסר” = (Rec − Planned) כשחיובי. אם אין תכנון בקבצים — הרשימה תישאר ריקה.</div>
       </div>
 
       <div class="card">
@@ -421,30 +418,31 @@
               <tr>
                 <th>אשכול</th><th>מק״ט</th><th>קו</th><th>כיוון</th><th>חלון/שעה</th>
                 <th class="mono">N</th><th class="mono">Planned</th><th class="mono">CV</th>
-                <th class="mono">Rec</th><th class="mono">Gap</th><th class="mono">Risk</th>
+                <th>Rec</th><th class="mono">פער</th><th>Risk</th><th class="mono">עודף</th>
               </tr>
             </thead>
             <tbody id="topBest"></tbody>
           </table>
         </div>
+        <div class="hint">“עודף” = (Planned − Rec) כשחיובי.</div>
       </div>
     </div>
 
     <div class="card">
       <h2>8) טבלת תקנים מומלצים</h2>
       <div class="row">
-        <span class="badge">Rec = התקן המומלץ בפועל, Pct = האחוזון שהופעל (דינמי/ידני).</span>
+        <span class="badge">עמודות <b>Rec</b> + <b>Pct</b> מציגות את התקן והאחוזון שבאמת הופעל (דינמי/ידני).</span>
       </div>
       <div class="tableWrap" style="margin-top:10px">
         <table>
           <thead>
             <tr>
               <th>אשכול</th><th>מק״ט</th><th>קו</th><th>כיוון</th><th>חלון/שעה</th>
-              <th class="mono">N(raw)</th><th class="mono">N(used)</th><th class="mono">Removed</th>
+              <th class="mono">N (raw)</th><th class="mono">N (used)</th><th class="mono">Removed</th>
               <th class="mono">Mean</th><th class="mono">Median</th><th class="mono">STD</th><th class="mono">CV</th>
               <th class="mono">P85</th><th class="mono">P90</th><th class="mono">P95</th>
               <th class="mono">Planned</th><th class="mono">Gap</th>
-              <th class="mono">Rec</th><th class="mono">Pct</th><th class="mono">Risk</th><th>סטטוס</th>
+              <th>Rec</th><th class="mono">Pct</th><th>Risk</th><th>סטטוס</th>
             </tr>
           </thead>
           <tbody id="tbl"></tbody>
@@ -453,14 +451,14 @@
     </div>
 
     <div class="card">
-      <h2>המלצות אופרטיביות</h2>
+      <h2>המלצות אופרטיביות למחר בבוקר</h2>
       <ul id="ops" class="muted" style="margin:8px 0 0 0; padding-right:18px"></ul>
-      <div class="hint" style="margin-top:8px">נבנה אוטומטית מהטבלה: Risk גבוה + Gap חיובי.</div>
+      <div class="hint" style="margin-top:8px">נבנה אוטומטית מהטבלאות: Risk גבוה + חוסר תקן בשיא/שעה צפופה.</div>
     </div>
   </div>
 
   <footer class="hint" style="margin:14px 4px 6px">
-    קובץ יחיד. עובד גם בלי אינטרנט. ל- GitHub Pages: העלה כ- <span class="mono">index.html</span> והפעל Pages.
+    קובץ יחיד. עובד גם בלי אינטרנט. כדי להפוך לדף אינטרנט: העלה ל-GitHub Pages / Netlify כ-HTML סטטי.
   </footer>
 </div>
 
@@ -468,29 +466,32 @@
 <div id="modalBack" class="modalBack">
   <div class="modal">
     <button class="btn x" id="btnClose">סגור ✕</button>
-    <h3>מדריך קצר</h3>
+    <h3>מדריך קצר — בשפה פשוטה</h3>
 
-    <p><b>מה זה “זמן תקן” כאן?</b> הזמן שנרצה להגדיר בלו״ז כדי לעמוד ברוב המקרים בזמן.</p>
+    <p><b>מה זה “זמן תקן” כאן?</b> זה הזמן שאנחנו רוצים להגדיר בלו״ז כדי שהנסיעה תעמוד ברוב המקרים בזמן ולא תייצר איחורים.</p>
 
     <ul>
-      <li><b>Histogram</b>: התפלגות זמני נסיעה.</li>
-      <li><b>P85/P90</b>: אחוזון. למשל P90 = 90% מהנסיעות קצרות או שוות לערך הזה.</li>
-      <li><b>CV</b>: שונות יחסית. גבוה = קו “לא יציב”.</li>
-      <li><b>Gap</b>: Rec − Planned. חיובי = חסר תקן. שלילי = עודף תקן.</li>
-      <li><b>Risk</b>: ציון 0–100: משקלל שונות, פער, ומיעוט דגימות.</li>
+      <li><b>Histogram (היסטוגרם)</b>: כמה נסיעות היו בכל טווח דקות.</li>
+      <li><b>אחוזון (P85/P90…)</b>: P90 אומר: 90% מהנסיעות היו ≤ הזמן הזה.</li>
+      <li><b>Mean / Median</b>: ממוצע מול חציון (החציון יציב יותר).</li>
+      <li><b>STD</b>: סטיית תקן — פיזור הזמנים.</li>
+      <li><b>CV</b>: שונות יחסית (STD/Mean). מעל ~0.25 לרוב מצביע על שונות גבוהה.</li>
+      <li><b>Planned</b>: זמן תכנון מהקובץ (אם קיים).</li>
+      <li><b>Gap</b>: Rec − Planned. חיובי = חסר תקן, שלילי = עודף.</li>
+      <li><b>Risk</b>: ציון 0–100 שמדרג איפה הכי “כואב”. משקלל CV, גודל פער, וכמות נתונים.</li>
     </ul>
 
     <div class="hr"></div>
     <h3>FAQ קצר</h3>
-    <p><b>למה Top-10 ריק?</b> אין Planned בקבצים או שלא זוהה במיפוי.</p>
-    <p><b>למה “לא נטען”?</b> בדרך כלל פתיחה ב-Preview שחוסם JavaScript. הורד ופתח בדפדפן.</p>
-    <p><b>למה הנתונים “לא זזים”?</b> בגרסה הזו כל שינוי בסינון מרנדר מחדש אוטומטית.</p>
+    <p><b>1) למה Top-10 ריק?</b> אין Planned בקבצים או לא זוהה. עדיין יש Rec לפי אחוזונים.</p>
+    <p><b>2) למה זה לא בוחר קבצים?</b> אם פתחת ב-Preview (Gmail/Drive/SharePoint preview) — זה חוסם. פתח את ה-URL הישיר של האתר.</p>
+    <p><b>3) למה הנתונים לא משתנים?</b> בגרסה הזו הם משתנים אוטומטית בכל שינוי סינון/מדיניות.</p>
   </div>
 </div>
 
 <script>
 /* =======================
-   Offline-first JS (no CDN)
+   Offline-first JS (no CDN) — v24
    ======================= */
 
 /* ---------- DOM ---------- */
@@ -578,19 +579,17 @@ const el = {
 
 /* ---------- State ---------- */
 let FILES = [];
-let ALL_ROWS = [];
-let HEADERS = [];
-
-let M = null;           // mapping object
+let ALL_ROWS = [];      // raw parsed objects from CSV(s)
+let HEADERS = [];       // union headers
+let M = null;           // mapping
 let DATA = [];          // normalized records
 let EX_RANGES = [];     // [{fromISO,toISO}]
-let LAST_TABLE = [];    // last computed summary table
+let LAST_TABLE = [];    // current computed table (after filters)
+let DROPPED = {missing:0, invalid:0, parse:0, excluded:0, outlier:0};
 
-let COUNTS = { raw:0, ok:0, out:0 };
-
-/* ---------- Utilities ---------- */
+/* ---------- Utility ---------- */
 const pad2 = (n)=> String(n).padStart(2,'0');
-const clamp = (x,a,b)=> Math.max(a, Math.min(b,x));
+const clamp = (x,a,b)=> Math.max(a, Math.min(b, x));
 const escapeHtml = (s)=> String(s??'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
 function showError(msg){ el.err.style.display='inline-flex'; el.err.textContent = msg; }
 function hideError(){ el.err.style.display='none'; el.err.textContent=''; }
@@ -602,12 +601,12 @@ function setLoading(on, msg){
 }
 function updateDepState(){
   el.depState.innerHTML = `
-    <div><b>סטטוס:</b> Offline-First פעיל. אין תלות ב-CDN.</div>
-    <div class="smallNote">אם הכפתורים לא מגיבים — כנראה פתיחה ב-Preview שחוסם JavaScript. הורד למחשב ופתח ב-Chrome/Edge.</div>
+    <div><b>סטטוס:</b> Offline-First. אין תלות ב-CDN.</div>
+    <div class="smallNote">אם פתחת ב-Preview (Gmail/Drive/SharePoint) — JavaScript/בחירת קבצים עלולים להיחסם. פתח בדפדפן ישירות.</div>
   `;
 }
 
-/* ---------- CSV parsing ---------- */
+/* ---------- CSV Parsing ---------- */
 function detectDelimiter(headerLine){
   const cands=[',',';','\t','|'];
   let best=',', bestCount=-1;
@@ -660,7 +659,7 @@ function readFileText(file){
   });
 }
 async function parseFiles(files){
-  ALL_ROWS=[]; HEADERS=[];
+  ALL_ROWS=[]; HEADERS=[]; DROPPED = {missing:0, invalid:0, parse:0, excluded:0, outlier:0};
   const fileArr = Array.from(files||[]);
   FILES = fileArr.map(f=>f.name);
   el.filesCount.textContent = String(FILES.length);
@@ -668,30 +667,34 @@ async function parseFiles(files){
 
   let raw=0;
   for(const f of fileArr){
-    const txt = await readFileText(f);
-    const rows = parseCsvText(txt);
-    raw += rows.length;
-    ALL_ROWS = ALL_ROWS.concat(rows);
-    for(const r of rows){
-      for(const k of Object.keys(r||{})){
-        if(k && !HEADERS.includes(k)) HEADERS.push(k);
+    try{
+      const txt = await readFileText(f);
+      const rows = parseCsvText(txt);
+      raw += rows.length;
+      ALL_ROWS = ALL_ROWS.concat(rows);
+      for(const r of rows){
+        for(const k of Object.keys(r||{})){
+          if(k && !HEADERS.includes(k)) HEADERS.push(k);
+        }
       }
+    }catch(e){
+      console.error(e);
+      DROPPED.parse++;
     }
   }
-  COUNTS.raw = raw;
   el.rawCount.textContent = String(raw);
 }
 
-/* ---------- Mapping helpers ---------- */
+/* ---------- Mapping ---------- */
 const SYN = {
-  date: ['date','Date','תאריך','service_date','TripDate','TripSourceDate'],
-  time: ['departure_time','Time','שעה','DepartureTime','start_time','TripStartTime','hour'],
-  dur:  ['actual_duration','Duration','ActualDuration','משך','TravelTime','duration','travel_time'],
-  cluster:['cluster','Cluster','אשכול','Depot','Region','cluster_name'],
-  makt: ['makt','מקט','מק״ט','RouteMakt','LineMakt','Makat'],
-  route: ['route_num','route','Route','קו','מספר קו','LineNumber','RouteNumber'],
+  date: ['date','Date','תאריך','TripSourceDate','service_date','TripDate','Date_'],
+  time: ['departure_time','Time','שעה','TripSourceTime','DepartureTime','Planned_Start_Time','start_time','TripStartTime','hour'],
+  dur:  ['actual_duration','Duration','Actual_Duration','ActualDuration','משך','TravelTime','duration','travel_time','ActualDurationSeconds','ActualDurationMinutes'],
+  cluster:['cluster','Cluster','ClusterName','אשכול','Depot','Region','cluster_name'],
+  makt: ['makt','מקט','מק״ט','RouteMakt','LineMakt','MaktLine','RouteMakat'],
+  route: ['route','Route','RouteId','RouteShortName','Line','line_id','קו','מספר קו','RouteNumber','LineNumber','route_num'],
   dir:  ['direction','Direction','כיוון','dir','DirectionId'],
-  plan: ['planned_duration','PlannedDuration','planned','ScheduleDuration','ScheduledDuration'],
+  plan: ['planned_duration','PlannedDuration','planned','Planned_Time','ScheduleDuration','ScheduledDuration','PlannedDurationMin','planned_minutes'],
   wd:   ['WeekDay','weekday','day_of_week','DOW','יום בשבוע']
 };
 function bestHeader(headers, keys){
@@ -708,202 +711,255 @@ function bestHeader(headers, keys){
   }
   return '';
 }
-function fillSelect(selectEl, headers, selected){
-  selectEl.innerHTML = '';
+function fillSelectHeaders(sel, headers, autoPick){
+  const prev = sel.value;
+  sel.innerHTML = '';
   const opt0 = document.createElement('option');
   opt0.value = '';
-  opt0.textContent = '—';
-  selectEl.appendChild(opt0);
-
+  opt0.textContent = '— (ללא) —';
+  sel.appendChild(opt0);
   for(const h of headers){
     const o = document.createElement('option');
-    o.value = h;
-    o.textContent = h;
-    selectEl.appendChild(o);
+    o.value = h; o.textContent = h;
+    sel.appendChild(o);
   }
-  selectEl.value = selected || '';
+  if(prev && headers.includes(prev)) sel.value = prev;
+  else if(autoPick) sel.value = autoPick;
 }
-function autoFillMapping(){
-  fillSelect(el.mDate, HEADERS, bestHeader(HEADERS, SYN.date));
-  fillSelect(el.mTime, HEADERS, bestHeader(HEADERS, SYN.time));
-  fillSelect(el.mDur, HEADERS, bestHeader(HEADERS, SYN.dur));
-  fillSelect(el.mCluster, HEADERS, bestHeader(HEADERS, SYN.cluster));
-  fillSelect(el.mMakt, HEADERS, bestHeader(HEADERS, SYN.makt));
-  fillSelect(el.mRoute, HEADERS, bestHeader(HEADERS, SYN.route));
-  fillSelect(el.mDir, HEADERS, bestHeader(HEADERS, SYN.dir));
-  fillSelect(el.mPlan, HEADERS, bestHeader(HEADERS, SYN.plan));
-  fillSelect(el.mWD, HEADERS, bestHeader(HEADERS, SYN.wd));
+function buildMappingUI(){
+  const h = HEADERS.slice();
+  fillSelectHeaders(el.mDate, h, bestHeader(h, SYN.date));
+  fillSelectHeaders(el.mTime, h, bestHeader(h, SYN.time));
+  fillSelectHeaders(el.mDur,  h, bestHeader(h, SYN.dur));
+  fillSelectHeaders(el.mCluster, h, bestHeader(h, SYN.cluster));
+  fillSelectHeaders(el.mMakt, h, bestHeader(h, SYN.makt));
+  fillSelectHeaders(el.mRoute, h, bestHeader(h, SYN.route));
+  fillSelectHeaders(el.mDir,  h, bestHeader(h, SYN.dir));
+  fillSelectHeaders(el.mPlan, h, bestHeader(h, SYN.plan));
+  fillSelectHeaders(el.mWD,   h, bestHeader(h, SYN.wd));
 }
 
 /* ---------- Parsing values ---------- */
-function toNumber(x){
-  const s = String(x??'').replace(/,/g,'').trim();
-  if(!s) return NaN;
-  const n = Number(s);
-  return Number.isFinite(n) ? n : NaN;
-}
-function parseHHMMToHour(s){
-  s = String(s??'').trim();
-  if(!s) return null;
-
-  // allow "HH:MM[:SS]" or "HHMM"
-  if(s.includes(':')){
-    const parts = s.split(':').map(p=>toNumber(p));
-    const hh = parts[0];
-    if(Number.isFinite(hh)) return clamp(Math.floor(hh),0,23);
-    return null;
+function toISODate(s){
+  const v = String(s||'').trim();
+  if(!v) return '';
+  // yyyy-mm-dd
+  const m1 = v.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+  if(m1){
+    const y=m1[1], mo=pad2(m1[2]), d=pad2(m1[3]);
+    return `${y}-${mo}-${d}`;
   }
-  // digits
-  const dig = s.replace(/\D/g,'');
-  if(dig.length>=2){
-    const hh = Number(dig.slice(0,2));
-    if(Number.isFinite(hh)) return clamp(Math.floor(hh),0,23);
+  // dd/mm/yyyy
+  const m2 = v.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+  if(m2){
+    const d=pad2(m2[1]), mo=pad2(m2[2]), y=m2[3];
+    return `${y}-${mo}-${d}`;
+  }
+  // try Date()
+  const dt = new Date(v);
+  if(!isNaN(dt.getTime())){
+    const y=dt.getFullYear();
+    const mo=pad2(dt.getMonth()+1);
+    const d=pad2(dt.getDate());
+    return `${y}-${mo}-${d}`;
+  }
+  return '';
+}
+function weekdayFromISO(iso){
+  if(!iso) return 0;
+  const dt = new Date(iso+'T00:00:00');
+  if(isNaN(dt.getTime())) return 0;
+  // JS: 0=Sun...6=Sat -> map to 1..7 (Mon=1)
+  const js = dt.getDay(); // 0 Sun
+  const map = {1:1,2:2,3:3,4:4,5:5,6:6,0:7}; // Mon..Sat, Sun->7
+  return map[js] || 0;
+}
+function dayTypeFromWD(wd){
+  if(wd>=1 && wd<=5) return 'א-ה';
+  if(wd===6) return 'ו';
+  if(wd===7) return 'שבת';
+  return 'לא ידוע';
+}
+function parseTimeToHourMin(s){
+  const v = String(s||'').trim();
+  if(!v) return null;
+  if(v.includes(':')){
+    const parts = v.split(':').map(x=>x.trim());
+    const hh = parseInt(parts[0],10);
+    const mm = parseInt(parts[1]||'0',10);
+    if(isFinite(hh) && isFinite(mm) && hh>=0 && hh<=48) return {h: clamp(hh,0,23), m: clamp(mm,0,59)};
+  }
+  // 730 / 0730 / 7
+  const dig = v.replace(/\D/g,'');
+  if(dig.length===4){
+    const hh = parseInt(dig.slice(0,2),10);
+    const mm = parseInt(dig.slice(2,4),10);
+    if(isFinite(hh) && isFinite(mm)) return {h: clamp(hh,0,23), m: clamp(mm,0,59)};
+  }
+  if(dig.length===3){
+    const hh = parseInt(dig.slice(0,1),10);
+    const mm = parseInt(dig.slice(1,3),10);
+    if(isFinite(hh) && isFinite(mm)) return {h: clamp(hh,0,23), m: clamp(mm,0,59)};
+  }
+  if(dig.length<=2 && dig.length>0){
+    const hh = parseInt(dig,10);
+    if(isFinite(hh)) return {h: clamp(hh,0,23), m: 0};
   }
   return null;
-}
-function parseDateAny(v){
-  const s = String(v??'').trim();
-  if(!s) return null;
-
-  // try YYYY-MM-DD
-  const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if(iso){
-    const d = new Date(`${iso[1]}-${iso[2]}-${iso[3]}T00:00:00`);
-    if(!isNaN(d.getTime())) return `${iso[1]}-${iso[2]}-${iso[3]}`;
-  }
-
-  // try DD/MM/YYYY or DD.MM.YYYY
-  const m = s.match(/^(\d{1,2})[\/\.](\d{1,2})[\/\.](\d{4})/);
-  if(m){
-    const dd = pad2(m[1]), mm = pad2(m[2]), yy = m[3];
-    const d = new Date(`${yy}-${mm}-${dd}T00:00:00`);
-    if(!isNaN(d.getTime())) return `${yy}-${mm}-${dd}`;
-  }
-
-  // fallback Date parse
-  const d = new Date(s);
-  if(!isNaN(d.getTime())){
-    const yy = d.getFullYear();
-    const mm = pad2(d.getMonth()+1);
-    const dd = pad2(d.getDate());
-    return `${yy}-${mm}-${dd}`;
-  }
-  return null;
-}
-function dayTypeFromISO(iso){
-  // JS: 0=Sunday ... 6=Saturday
-  const d = new Date(iso + 'T00:00:00');
-  const dow = d.getDay();
-  if(dow === 5) return 'ו';
-  if(dow === 6) return 'שבת';
-  return 'א-ה';
 }
 function windowFromHour(h){
-  if(h===null || h===undefined) return '—';
-  if(h>=6 && h<=9) return 'שיא בוקר';
-  if(h>=10 && h<=14) return 'ביניים';
-  if(h>=15 && h<=19) return 'שיא ערב';
-  if(h>=20 && h<=23) return 'לילה';
-  return 'לילה'; // 0-5
+  if(h>=0 && h<=4) return 'לילה (00-04)';
+  if(h>=5 && h<=9) return 'שיא בוקר (05-09)';
+  if(h>=10 && h<=14) return 'שפל יום (10-14)';
+  if(h>=15 && h<=19) return 'שיא אחה״צ (15-19)';
+  return 'ערב (20-23)';
 }
-function parseDurationToMin(v, unitMode){
-  const s = String(v??'').trim();
-  if(!s) return NaN;
+function parseDurationToMin(value, unit){
+  const v = String(value||'').trim();
+  if(!v) return null;
 
-  // explicit modes
-  if(unitMode === 'sec'){
-    const n = toNumber(s);
-    return Number.isFinite(n) ? n/60 : NaN;
+  const asNum = ()=>{
+    const n = parseFloat(v.replace(/,/g,'.'));
+    return (isFinite(n) ? n : null);
+  };
+
+  const fromHHMMSS = (txt)=>{
+    const p = txt.split(':').map(x=>x.trim());
+    if(p.length<2) return null;
+    const hh = parseFloat(p[0]||'0');
+    const mm = parseFloat(p[1]||'0');
+    const ss = parseFloat(p[2]||'0');
+    if(!isFinite(hh) || !isFinite(mm) || !isFinite(ss)) return null;
+    return hh*60 + mm + ss/60;
+  };
+
+  if(unit === 'hhmmss' || unit === 'hhmm'){
+    if(v.includes(':')) return fromHHMMSS(v);
+    return null;
   }
-  if(unitMode === 'min'){
-    const n = toNumber(s);
-    return Number.isFinite(n) ? n : NaN;
+  if(unit === 'sec'){
+    const n = asNum(); if(n===null) return null;
+    return n/60;
   }
-  if(unitMode === 'hhmm' || unitMode === 'hhmmss'){
-    if(!s.includes(':')) return NaN;
-    const parts = s.split(':').map(p=>toNumber(p));
-    const hh = parts[0], mm = parts[1];
-    const ss = parts[2] || 0;
-    if(!Number.isFinite(hh) || !Number.isFinite(mm)) return NaN;
-    return (hh*3600 + mm*60 + (Number.isFinite(ss)?ss:0))/60;
+  if(unit === 'min'){
+    const n = asNum(); if(n===null) return null;
+    return n;
   }
 
-  // auto mode
-  if(s.includes(':')){
-    const parts = s.split(':').map(p=>toNumber(p));
-    const hh = parts[0], mm = parts[1];
-    const ss = parts[2] || 0;
-    if(Number.isFinite(hh) && Number.isFinite(mm)){
-      return (hh*3600 + mm*60 + (Number.isFinite(ss)?ss:0))/60;
-    }
+  // auto:
+  if(v.includes(':')){
+    const m = fromHHMMSS(v);
+    if(m!==null) return m;
   }
-  const n = toNumber(s);
-  if(!Number.isFinite(n)) return NaN;
-  // heuristic: if huge number -> seconds
-  if(n > 600) return n/60;
-  return n;
+  const n = asNum();
+  if(n===null) return null;
+
+  // heuristics: large numbers are seconds
+  if(n > 500) return n/60; // seconds
+  return n; // minutes
 }
 
-/* ---------- Stats helpers ---------- */
-function quantile(sortedArr, q){
-  if(!sortedArr.length) return NaN;
-  const pos = (sortedArr.length - 1) * q;
-  const base = Math.floor(pos);
-  const rest = pos - base;
-  if(sortedArr[base+1] !== undefined){
-    return sortedArr[base] + rest * (sortedArr[base+1]-sortedArr[base]);
-  }
-  return sortedArr[base];
-}
+/* ---------- Stats ---------- */
 function mean(arr){
-  if(!arr.length) return NaN;
-  let s=0;
-  for(const x of arr) s+=x;
+  if(!arr.length) return null;
+  let s=0; for(const x of arr) s+=x;
   return s/arr.length;
+}
+function median(arr){
+  if(!arr.length) return null;
+  const a = arr.slice().sort((x,y)=>x-y);
+  const mid = Math.floor(a.length/2);
+  return (a.length%2 ? a[mid] : (a[mid-1]+a[mid])/2);
 }
 function std(arr){
   if(arr.length<2) return 0;
   const m = mean(arr);
-  let v=0;
-  for(const x of arr){ const d=x-m; v += d*d; }
-  return Math.sqrt(v/(arr.length-1));
+  let s=0;
+  for(const x of arr) s += (x-m)*(x-m);
+  return Math.sqrt(s/(arr.length-1));
 }
-function median(sortedArr){ return quantile(sortedArr, 0.5); }
+function percentile(arr, p){
+  if(!arr.length) return null;
+  const a = arr.slice().sort((x,y)=>x-y);
+  const pos = (p/100)*(a.length-1);
+  const lo = Math.floor(pos), hi = Math.ceil(pos);
+  if(lo===hi) return a[lo];
+  const w = pos-lo;
+  return a[lo]*(1-w)+a[hi]*w;
+}
+function removeOutliers(values, mode){
+  if(mode==='off') return {used: values.slice(), removed:0};
+  const a = values.slice().filter(v => isFinite(v));
+  if(a.length<4) return {used:a, removed: values.length-a.length};
+  let used=a;
 
-function filterOutliers(values, mode){
-  // expects raw numeric array
-  if(mode === 'off') return { used: values.slice(), removed: 0 };
-  if(values.length < 5) return { used: values.slice(), removed: 0 };
-
-  const s = values.slice().sort((a,b)=>a-b);
-  if(mode === 'iqr'){
-    const q1 = quantile(s, 0.25);
-    const q3 = quantile(s, 0.75);
-    const iqr = q3-q1;
+  if(mode==='iqr'){
+    const q1 = percentile(a,25);
+    const q3 = percentile(a,75);
+    const iqr = (q3-q1);
     const lo = q1 - 1.5*iqr;
     const hi = q3 + 1.5*iqr;
-    const used = values.filter(x=>x>=lo && x<=hi);
-    return { used, removed: values.length-used.length };
+    used = a.filter(x => x>=lo && x<=hi);
+  } else { // mad
+    const med = median(a);
+    const dev = a.map(x => Math.abs(x-med));
+    const mad = median(dev) || 0;
+    if(mad===0){
+      used = a;
+    } else {
+      // modified z-score
+      used = a.filter(x => Math.abs(0.6745*(x-med)/mad) <= 3.5);
+    }
   }
+  return {used, removed: a.length-used.length};
+}
+function fmt(x, d=1){
+  if(x===null || x===undefined || !isFinite(x)) return '—';
+  return Number(x).toFixed(d);
+}
+function isPeak(winOrHour){
+  // supports window label or numeric hour
+  if(typeof winOrHour === 'number'){
+    const h=winOrHour;
+    return (h>=5 && h<=9) || (h>=15 && h<=19);
+  }
+  const s = String(winOrHour||'');
+  return s.includes('שיא בוקר') || s.includes('שיא אחה״צ');
+}
+function pickPctForRow(row){
+  const pol = el.policy.value;
+  if(pol === 'manual'){
+    return clamp(parseInt(el.pct.value,10)||85,50,99);
+  }
+  // dynamic:
+  let base = isPeak(row.winOrHour) ? 90 : 85;
 
-  // MAD
-  const med = quantile(s, 0.5);
-  const absDev = values.map(x=>Math.abs(x-med)).sort((a,b)=>a-b);
-  const mad = quantile(absDev, 0.5) || 0;
-  if(mad === 0) return { used: values.slice(), removed: 0 };
-  const k = 3.5; // robust threshold
-  const lo = med - k*1.4826*mad;
-  const hi = med + k*1.4826*mad;
-  const used = values.filter(x=>x>=lo && x<=hi);
-  return { used, removed: values.length-used.length };
+  // adjustments by CV / N
+  const cv = row.cv ?? 0;
+  const n  = row.nUsed ?? 0;
+  if(cv > 0.45) base += 5;
+  else if(cv > 0.35) base += 3;
+  else if(cv > 0.25) base += 1;
+
+  if(n>0 && n < 20) base += 2;
+  if(n>0 && n < 12) base += 2;
+
+  return clamp(base,50,99);
+}
+function riskScore(cv, gapMin, nUsed, meanMin){
+  const cvN = clamp((cv||0)/0.6, 0, 1);                 // 0..~0.6
+  const gapN = (meanMin && isFinite(meanMin)) ? clamp(Math.abs(gapMin||0)/(meanMin*0.4), 0, 1) : 0; // 40% of mean
+  const nN = nUsed>0 ? clamp(1/Math.sqrt(nUsed), 0, 1) : 1;
+  const r = 0.50*cvN + 0.35*gapN + 0.15*nN;
+  return Math.round(100*clamp(r,0,1));
 }
 
-/* ---------- Build normalized DATA ---------- */
-function buildMappingFromUI(){
+/* ---------- Normalize DATA ---------- */
+function getMap(){
   return {
     date: el.mDate.value,
     time: el.mTime.value,
-    dur: el.mDur.value,
+    dur:  el.mDur.value,
     cluster: el.mCluster.value,
     makt: el.mMakt.value,
     route: el.mRoute.value,
@@ -911,207 +967,751 @@ function buildMappingFromUI(){
     plan: el.mPlan.value,
     wd: el.mWD.value,
     durUnit: el.durUnit.value,
-    gran: el.gran.value,
-    outMode: el.outMode.value,
-    minN: clamp(parseInt(el.minN.value||'10',10) || 10, 3, 9999)
   };
 }
-function normalizeData(){
-  hideError(); hideWarn();
-  COUNTS.ok = 0;
-  COUNTS.out = 0;
+function normalizeAllRows(){
+  DROPPED = {missing:0, invalid:0, parse:0, excluded:0, outlier:0};
+  const map = getMap();
+  M = map;
 
-  M = buildMappingFromUI();
-
-  if(!M.date || !M.time || !M.dur){
-    showError('חסר מיפוי חובה: תאריך + שעה + משך בפועל. בחר ידנית ואז לחץ “יישם”.');
+  if(!map.date || !map.time || !map.dur){
+    showError('חובה למפות: תאריך + שעת יציאה + משך בפועל. בחר עמודות ואז לחץ “יישם”.');
     return false;
   }
+  hideError();
+  hideWarn();
 
-  DATA = [];
+  const out = [];
   for(const r of ALL_ROWS){
-    const dateISO = parseDateAny(r[M.date]);
-    const hour = parseHHMMToHour(r[M.time]);
-    const durMin = parseDurationToMin(r[M.dur], M.durUnit);
+    const iso = toISODate(r[map.date]);
+    const tm = parseTimeToHourMin(r[map.time]);
+    const durMin = parseDurationToMin(r[map.dur], map.durUnit);
 
-    if(!dateISO || hour===null || !Number.isFinite(durMin) || durMin<=0){
+    if(!iso || !tm || durMin===null || !isFinite(durMin)){
+      DROPPED.invalid++;
       continue;
     }
 
-    const cluster = (M.cluster ? String(r[M.cluster]??'').trim() : '') || '—';
-    const makt = (M.makt ? String(r[M.makt]??'').trim() : '') || '—';
-    const route = (M.route ? String(r[M.route]??'').trim() : '') || '—';
-    const dir = (M.dir ? String(r[M.dir]??'').trim() : '') || '—';
+    const wd = map.wd ? parseInt(String(r[map.wd]||'').trim(),10) : weekdayFromISO(iso);
+    const dayType = dayTypeFromWD(wd);
 
-    let plannedMin = NaN;
-    if(M.plan){
-      plannedMin = parseDurationToMin(r[M.plan], M.durUnit);
-      if(!Number.isFinite(plannedMin) || plannedMin<=0) plannedMin = NaN;
-    }
+    const cluster = map.cluster ? String(r[map.cluster]||'').trim() : '';
+    const makt = map.makt ? String(r[map.makt]||'').trim() : '';
+    const route = map.route ? String(r[map.route]||'').trim() : '';
+    const dir = map.dir ? String(r[map.dir]||'').trim() : '';
 
-    const dayType = dayTypeFromISO(dateISO);
+    const plannedMin = map.plan ? parseDurationToMin(r[map.plan], map.durUnit) : null;
+
+    const hour = tm.h;
     const win = windowFromHour(hour);
 
-    DATA.push({ cluster, makt, route, dir, dateISO, hour, win, dayType, durMin, plannedMin });
+    out.push({
+      cluster, makt, route, dir,
+      dateISO: iso,
+      wd: (isFinite(wd) ? wd : 0),
+      dayType,
+      hour,
+      win,
+      durMin,
+      plannedMin: (plannedMin!==null && isFinite(plannedMin) ? plannedMin : null),
+    });
   }
 
-  COUNTS.ok = DATA.length;
-  el.okCount.textContent = String(COUNTS.ok);
-  el.outCount.textContent = String(COUNTS.out);
-
-  if(DATA.length === 0){
-    showError('לא נמצאו שורות תקינות אחרי מיפוי/המרה. בדוק מיפוי, פורמט תאריך, ויחידות משך.');
-    return false;
-  }
+  DATA = out;
+  el.okCount.textContent = String(DATA.length);
   return true;
 }
 
 /* ---------- Filters UI ---------- */
-function uniq(arr){ return Array.from(new Set(arr)).sort((a,b)=>String(a).localeCompare(String(b),'he')); }
-function fillFilterSelect(sel, values, allLabel='הכול'){
+function uniqSorted(arr){
+  return Array.from(new Set(arr.filter(x=>String(x||'').trim().length>0))).sort((a,b)=>String(a).localeCompare(String(b),'he'));
+}
+function fillFilterSelect(sel, values, titleAll='הכל'){
+  const prev = sel.value;
   sel.innerHTML = '';
-  const optAll = document.createElement('option');
-  optAll.value = '';
-  optAll.textContent = allLabel;
-  sel.appendChild(optAll);
+  const oAll = document.createElement('option');
+  oAll.value = '';
+  oAll.textContent = `— ${titleAll} —`;
+  sel.appendChild(oAll);
   for(const v of values){
-    const o = document.createElement('option');
-    o.value = v;
-    o.textContent = v;
+    const o=document.createElement('option');
+    o.value=v; o.textContent=v;
     sel.appendChild(o);
   }
-  sel.value = '';
+  if(prev && values.includes(prev)) sel.value = prev;
+  else sel.value = '';
 }
-function refreshFilterOptions(){
-  fillFilterSelect(el.fCluster, uniq(DATA.map(d=>d.cluster)));
-  fillFilterSelect(el.fMakt, uniq(DATA.map(d=>d.makt)));
-  fillFilterSelect(el.fRoute, uniq(DATA.map(d=>d.route)));
-  fillFilterSelect(el.fDir, uniq(DATA.map(d=>d.dir)));
-  fillFilterSelect(el.fDay, uniq(DATA.map(d=>d.dayType)), 'הכול');
-  fillFilterSelect(el.fWin, uniq(DATA.map(d=>d.win)), 'הכול');
+function populateFilterOptions(){
+  fillFilterSelect(el.fCluster, uniqSorted(DATA.map(x=>x.cluster)), 'כל האשכולות');
+  fillFilterSelect(el.fMakt,    uniqSorted(DATA.map(x=>x.makt)), 'כל המק״טים');
+  fillFilterSelect(el.fRoute,   uniqSorted(DATA.map(x=>x.route)), 'כל הקווים');
+  fillFilterSelect(el.fDir,     uniqSorted(DATA.map(x=>x.dir)), 'כל הכיוונים');
+  fillFilterSelect(el.fDay,     uniqSorted(DATA.map(x=>x.dayType)), 'כל סוגי הימים');
+  fillFilterSelect(el.fWin,     uniqSorted(DATA.map(x=>x.win)), 'כל החלונות');
 
-  // hours 0-23 present
-  const hours = uniq(DATA.map(d=>String(d.hour))).sort((a,b)=>Number(a)-Number(b));
-  fillFilterSelect(el.fHour, hours, 'הכול');
+  const hours = uniqSorted(DATA.map(x=>pad2(x.hour)+':00'));
+  fillFilterSelect(el.fHour, hours, 'כל השעות');
 
   // default date range
-  const dates = uniq(DATA.map(d=>d.dateISO)).sort();
-  el.fFrom.value = dates[0] || '';
-  el.fTo.value = dates[dates.length-1] || '';
+  const dates = uniqSorted(DATA.map(x=>x.dateISO));
+  if(dates.length){
+    el.fFrom.value = dates[0];
+    el.fTo.value = dates[dates.length-1];
+  }
 }
 function renderExList(){
-  if(!EX_RANGES.length){ el.exList.textContent = 'אין החרגות.'; return; }
-  el.exList.innerHTML = EX_RANGES.map((x,idx)=>
-    `<div class="row" style="justify-content:space-between">
-      <span class="mono">${escapeHtml(x.fromISO)} → ${escapeHtml(x.toISO)}</span>
-      <button class="btn small red" data-exdel="${idx}">מחק</button>
-    </div>`
-  ).join('');
-  el.exList.querySelectorAll('button[data-exdel]').forEach(btn=>{
+  if(!EX_RANGES.length){
+    el.exList.innerHTML = 'אין טווחים מוחרגים.';
+    return;
+  }
+  el.exList.innerHTML = EX_RANGES.map((r,idx)=>`
+    <div class="row" style="justify-content:space-between;gap:8px;margin:6px 0;">
+      <span class="badge mono">${escapeHtml(r.fromISO)} → ${escapeHtml(r.toISO)}</span>
+      <button class="btn small red" data-ex="${idx}">הסר</button>
+    </div>
+  `).join('');
+  el.exList.querySelectorAll('button[data-ex]').forEach(btn=>{
     btn.addEventListener('click', ()=>{
-      const i = Number(btn.getAttribute('data-exdel'));
+      const i = parseInt(btn.getAttribute('data-ex'),10);
       EX_RANGES.splice(i,1);
       renderExList();
-      renderAll(); // live update
+      refreshAll(); // auto update
     });
   });
 }
 
-/* ---------- Filtering ---------- */
-function isDateInRange(d, fromISO, toISO){
-  if(fromISO && d < fromISO) return false;
-  if(toISO && d > toISO) return false;
+/* ---------- Apply current filters ---------- */
+function inRangeISO(d, from, to){
+  if(from && d < from) return false;
+  if(to && d > to) return false;
   return true;
 }
-function isExcluded(dateISO){
-  for(const ex of EX_RANGES){
-    if(dateISO >= ex.fromISO && dateISO <= ex.toISO) return true;
+function isExcluded(iso){
+  for(const r of EX_RANGES){
+    if(iso >= r.fromISO && iso <= r.toISO) return true;
   }
   return false;
 }
-function getFilteredData(){
-  const fc = el.fCluster.value;
-  const fm = el.fMakt.value;
-  const fr = el.fRoute.value;
-  const fd = el.fDir.value;
-  const fday = el.fDay.value;
-  const fwin = el.fWin.value;
-  const fhour = el.fHour.value;
-  const fromISO = el.fFrom.value;
-  const toISO = el.fTo.value;
+function currentFilters(){
+  return {
+    cluster: el.fCluster.value,
+    makt: el.fMakt.value,
+    route: el.fRoute.value,
+    dir: el.fDir.value,
+    dayType: el.fDay.value,
+    win: el.fWin.value,
+    hour: el.fHour.value, // "HH:00"
+    from: el.fFrom.value,
+    to: el.fTo.value,
+  };
+}
+function filterRecords(){
+  const f = currentFilters();
+  const out = [];
+  let excluded=0;
 
-  return DATA.filter(x=>{
-    if(fc && x.cluster !== fc) return false;
-    if(fm && x.makt !== fm) return false;
-    if(fr && x.route !== fr) return false;
-    if(fd && x.dir !== fd) return false;
-    if(fday && x.dayType !== fday) return false;
-
-    if(!isDateInRange(x.dateISO, fromISO, toISO)) return false;
-    if(isExcluded(x.dateISO)) return false;
-
-    if(el.gran.value === 'window'){
-      if(fwin && x.win !== fwin) return false;
-    } else {
-      if(fhour && String(x.hour) !== String(fhour)) return false;
+  for(const r of DATA){
+    if(f.cluster && r.cluster !== f.cluster) continue;
+    if(f.makt && r.makt !== f.makt) continue;
+    if(f.route && r.route !== f.route) continue;
+    if(f.dir && r.dir !== f.dir) continue;
+    if(f.dayType && r.dayType !== f.dayType) continue;
+    if(f.win && r.win !== f.win) continue;
+    if(f.hour){
+      const hh = pad2(r.hour)+':00';
+      if(hh !== f.hour) continue;
     }
-    return true;
-  });
-}
+    if((f.from || f.to) && !inRangeISO(r.dateISO, f.from, f.to)) continue;
+    if(isExcluded(r.dateISO)){ excluded++; continue; }
 
-/* ---------- Policy / Rec calc ---------- */
-function isPeak(bucketLabel){
-  return bucketLabel === 'שיא בוקר' || bucketLabel === 'שיא ערב';
-}
-function choosePct({bucket, cv, n}){
-  if(el.policy.value === 'manual'){
-    return clamp(parseInt(el.pct.value||'85',10)||85,50,99);
+    out.push(r);
   }
-  let p = isPeak(bucket) ? 90 : 85;
-  if(cv >= 0.25) p += 2;
-  if(cv >= 0.35) p += 2;
-  if(n < (M?.minN||10)) p += 2;
-  return clamp(p, 80, 95);
-}
-function riskScore({cv, gap, n}){
-  // cv up to ~0.5 => 0..60
-  const a = clamp(cv*140, 0, 70);
-  const b = (Number.isFinite(gap) ? clamp(Math.abs(gap)*6, 0, 25) : 0);
-  const c = (n < (M?.minN||10)) ? clamp((M.minN - n)*3, 0, 20) : 0;
-  return Math.round(clamp(a+b+c, 0, 100));
+  DROPPED.excluded = excluded;
+  return out;
 }
 
-/* ---------- Summaries ---------- */
-function groupKey(x){
-  const timeKey = (el.gran.value === 'window') ? x.win : String(x.hour);
-  return [x.cluster, x.makt, x.route, x.dir, timeKey].join('||');
+/* ---------- Compute table (grouping) ---------- */
+function groupKey(rec){
+  const gran = el.gran.value;
+  const t = (gran==='hour') ? (pad2(rec.hour)+':00') : rec.win;
+  return [
+    rec.cluster||'',
+    rec.makt||'',
+    rec.route||'',
+    rec.dir||'',
+    rec.dayType||'',
+    t
+  ].join('||');
 }
-function summarize(filtered){
+function computeTable(records){
   const groups = new Map();
-  for(const x of filtered){
-    const k = groupKey(x);
-    if(!groups.has(k)){
-      groups.set(k, {
-        cluster:x.cluster, makt:x.makt, route:x.route, dir:x.dir,
-        bucket: (el.gran.value === 'window') ? x.win : String(x.hour),
-        dur: [], plan: []
-      });
+  const gran = el.gran.value;
+
+  for(const rec of records){
+    const t = (gran==='hour') ? (pad2(rec.hour)+':00') : rec.win;
+    const key = groupKey(rec);
+    let g = groups.get(key);
+    if(!g){
+      g = {
+        cluster: rec.cluster||'',
+        makt: rec.makt||'',
+        route: rec.route||'',
+        dir: rec.dir||'',
+        dayType: rec.dayType||'',
+        winOrHour: t,
+        durs: [],
+        plans: [],
+      };
+      groups.set(key,g);
     }
-    const g = groups.get(k);
-    g.dur.push(x.durMin);
-    if(Number.isFinite(x.plannedMin)) g.plan.push(x.plannedMin);
+    g.durs.push(rec.durMin);
+    if(rec.plannedMin!==null && isFinite(rec.plannedMin)) g.plans.push(rec.plannedMin);
   }
 
-  const out=[];
-  let totalRemoved=0;
+  const minN = clamp(parseInt(el.minN.value,10)||10, 3, 999999);
+  const outMode = el.outMode.value;
+
+  const rows = [];
+  let outRemovedTotal = 0;
 
   for(const g of groups.values()){
-    const rawN = g.dur.length;
-    const { used, removed } = filterOutliers(g.dur, el.outMode.value);
-    totalRemoved += removed;
+    const nRaw = g.durs.length;
+    const cleaned = removeOutliers(g.durs, outMode);
+    const used = cleaned.used;
+    const removed = cleaned.removed;
+    outRemovedTotal += removed;
 
-    const usedSorted = used.slice().sort((a,b)=>a-b);
-    const usedN = usedSorted.length;
-    if(usedN < (M?.minN||10)) continue;
+    const nUsed = used.length;
 
-    const mu = mean(us
+    const m = mean(used);
+    const med = median(used);
+    const sd = std(used);
+    const cv = (m && m>0) ? (sd/m) : 0;
+
+    const p85 = percentile(used,85);
+    const p90 = percentile(used,90);
+    const p95 = percentile(used,95);
+
+    const planned = g.plans.length ? median(g.plans) : null;
+
+    const pctApplied = pickPctForRow({winOrHour: g.winOrHour, cv, nUsed});
+    const rec = percentile(used, pctApplied);
+
+    const gap = (planned!==null && rec!==null) ? (rec - planned) : null;
+    const risk = riskScore(cv, (gap??0), nUsed, (m??null));
+
+    const status = (nUsed < minN) ? 'N נמוך' : 'OK';
+
+    rows.push({
+      cluster:g.cluster, makt:g.makt, route:g.route, dir:g.dir,
+      winOrHour:g.winOrHour,
+      nRaw, nUsed, removed,
+      mean:m, median:med, std:sd, cv,
+      p85, p90, p95,
+      planned,
+      gap,
+      rec,
+      pctApplied,
+      risk,
+      status,
+      dayType:g.dayType,
+    });
+  }
+
+  el.outCount.textContent = String(outRemovedTotal);
+  return rows.sort((a,b)=> (b.risk||0)-(a.risk||0));
+}
+
+/* ---------- Render UI ---------- */
+function clearCanvas(cnv){
+  const ctx = cnv.getContext('2d');
+  ctx.clearRect(0,0,cnv.width,cnv.height);
+  // background white
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0,0,cnv.width,cnv.height);
+  return ctx;
+}
+function drawHistogram(cnv, values, rec){
+  const ctx = clearCanvas(cnv);
+  const w=cnv.width, h=cnv.height;
+  const pad=28;
+
+  const arr = values.slice().filter(x=>isFinite(x));
+  if(arr.length<3){
+    ctx.fillStyle='#6b7280';
+    ctx.font='14px system-ui';
+    ctx.fillText('אין מספיק נתונים להיסטוגרם', pad, 40);
+    return;
+  }
+
+  const min = Math.min(...arr);
+  const max = Math.max(...arr);
+  const bins = 18;
+  const bw = (max-min)/bins || 1;
+  const counts = new Array(bins).fill(0);
+  for(const x of arr){
+    let i = Math.floor((x-min)/bw);
+    if(i<0) i=0;
+    if(i>=bins) i=bins-1;
+    counts[i]++;
+  }
+  const cMax = Math.max(...counts);
+
+  // axes
+  ctx.strokeStyle='rgba(17,24,39,.18)';
+  ctx.lineWidth=1;
+  ctx.beginPath();
+  ctx.moveTo(pad, h-pad);
+  ctx.lineTo(w-pad, h-pad);
+  ctx.lineTo(w-pad, pad);
+  ctx.stroke();
+
+  // bars
+  const innerW = (w-2*pad);
+  const innerH = (h-2*pad);
+  const barW = innerW/bins;
+
+  ctx.fillStyle='rgba(17,24,39,.12)';
+  for(let i=0;i<bins;i++){
+    const bh = (counts[i]/cMax)*innerH;
+    const x = pad + i*barW;
+    const y = (h-pad) - bh;
+    ctx.fillRect(x+1, y, barW-2, bh);
+  }
+
+  // rec line
+  if(rec!==null && isFinite(rec)){
+    const x = pad + ((rec-min)/(max-min||1))*innerW;
+    ctx.strokeStyle='rgba(124,58,237,.95)';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(x, pad);
+    ctx.lineTo(x, h-pad);
+    ctx.stroke();
+
+    ctx.fillStyle='rgba(124,58,237,.95)';
+    ctx.font='12px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+    ctx.fillText('Rec', Math.min(w-pad-26, x+6), pad+14);
+  }
+}
+function drawTrend(cnv, byHourMean, byHourRec){
+  const ctx = clearCanvas(cnv);
+  const w=cnv.width, h=cnv.height;
+  const pad=28;
+
+  // collect y scale
+  const ys=[];
+  for(let i=0;i<24;i++){
+    if(isFinite(byHourMean[i])) ys.push(byHourMean[i]);
+    if(isFinite(byHourRec[i])) ys.push(byHourRec[i]);
+  }
+  if(ys.length<3){
+    ctx.fillStyle='#6b7280';
+    ctx.font='14px system-ui';
+    ctx.fillText('אין מספיק נתונים למגמה לפי שעה', pad, 40);
+    return;
+  }
+  const yMin = Math.min(...ys);
+  const yMax = Math.max(...ys);
+  const innerW = (w-2*pad);
+  const innerH = (h-2*pad);
+
+  // axes
+  ctx.strokeStyle='rgba(17,24,39,.18)';
+  ctx.lineWidth=1;
+  ctx.beginPath();
+  ctx.moveTo(pad, h-pad);
+  ctx.lineTo(w-pad, h-pad);
+  ctx.lineTo(w-pad, pad);
+  ctx.stroke();
+
+  const xFor = (i)=> pad + (i/23)*innerW;
+  const yFor = (v)=> (h-pad) - ((v - yMin)/(yMax - yMin || 1))*innerH;
+
+  // mean line (black)
+  ctx.strokeStyle='rgba(17,24,39,.95)';
+  ctx.lineWidth=2;
+  ctx.beginPath();
+  let started=false;
+  for(let i=0;i<24;i++){
+    const v = byHourMean[i];
+    if(!isFinite(v)) { started=false; continue; }
+    const x=xFor(i), y=yFor(v);
+    if(!started){ ctx.moveTo(x,y); started=true; }
+    else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+
+  // rec line (purple)
+  ctx.strokeStyle='rgba(124,58,237,.95)';
+  ctx.lineWidth=2;
+  ctx.beginPath();
+  started=false;
+  for(let i=0;i<24;i++){
+    const v = byHourRec[i];
+    if(!isFinite(v)) { started=false; continue; }
+    const x=xFor(i), y=yFor(v);
+    if(!started){ ctx.moveTo(x,y); started=true; }
+    else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+
+  // x labels sparse
+  ctx.fillStyle='rgba(17,24,39,.65)';
+  ctx.font='11px system-ui';
+  for(let i=0;i<24;i+=3){
+    const x=xFor(i);
+    ctx.fillText(String(i), x-3, h-10);
+  }
+}
+function setKPI(kN, kMean, kRec, kPct, kCV){
+  el.kN.textContent = kN;
+  el.kMean.textContent = kMean;
+  el.kRec.textContent = kRec;
+  el.kPct.textContent = kPct;
+  el.kCV.textContent = kCV;
+}
+function renderMain(records){
+  // overall KPI (on filtered records)
+  const durs = records.map(r=>r.durMin);
+  const cleaned = removeOutliers(durs, el.outMode.value);
+  const used = cleaned.used;
+  const m = mean(used);
+  const sd = std(used);
+  const cv = (m && m>0) ? (sd/m) : 0;
+
+  // pct for overall: treat as peak if user filtered to peak window/hour; else off-peak
+  const f = currentFilters();
+  const hintPeak = (f.win && isPeak(f.win)) || (f.hour && isPeak(parseInt(f.hour,10)));
+  const pctApplied = (el.policy.value==='manual') ? (parseInt(el.pct.value,10)||85)
+                    : clamp((hintPeak?90:85) + (cv>0.35?3: cv>0.25?1:0) + (used.length<20?2:0), 50, 99);
+  const rec = percentile(used, pctApplied);
+
+  setKPI(
+    String(used.length),
+    fmt(m,1),
+    fmt(rec,1),
+    'P'+String(pctApplied),
+    fmt(cv,2)
+  );
+
+  // table by group
+  LAST_TABLE = computeTable(records);
+
+  // main table
+  el.tbl.innerHTML = LAST_TABLE.map(r=>{
+    const gap = (r.gap===null || !isFinite(r.gap)) ? null : r.gap;
+    const gapTxt = (gap===null) ? '—' : fmt(gap,1);
+    const plannedTxt = (r.planned===null) ? '—' : fmt(r.planned,1);
+    const riskBadge = r.risk>=75 ? 'bad' : r.risk>=55 ? 'warn' : 'good';
+    const statusBadge = r.status==='OK' ? 'good' : 'warn';
+    return `
+      <tr>
+        <td>${escapeHtml(r.cluster)}</td>
+        <td>${escapeHtml(r.makt)}</td>
+        <td>${escapeHtml(r.route)}</td>
+        <td>${escapeHtml(r.dir)}</td>
+        <td>${escapeHtml(r.winOrHour)}</td>
+        <td class="mono">${r.nRaw}</td>
+        <td class="mono">${r.nUsed}</td>
+        <td class="mono">${r.removed}</td>
+        <td class="mono">${fmt(r.mean,1)}</td>
+        <td class="mono">${fmt(r.median,1)}</td>
+        <td class="mono">${fmt(r.std,1)}</td>
+        <td class="mono">${fmt(r.cv,2)}</td>
+        <td class="mono">${fmt(r.p85,1)}</td>
+        <td class="mono">${fmt(r.p90,1)}</td>
+        <td class="mono">${fmt(r.p95,1)}</td>
+        <td class="mono">${plannedTxt}</td>
+        <td class="mono">${gapTxt}</td>
+        <td><span class="badge purp mono">${fmt(r.rec,1)}</span></td>
+        <td class="mono">P${r.pctApplied}</td>
+        <td><span class="badge ${riskBadge}">${r.risk}</span></td>
+        <td><span class="badge ${statusBadge}">${escapeHtml(r.status)}</span></td>
+      </tr>
+    `;
+  }).join('');
+
+  // Top worst/best
+  const withPlan = LAST_TABLE.filter(r=>r.planned!==null && isFinite(r.planned) && r.rec!==null && isFinite(r.rec) && r.nUsed>0);
+  const worst = withPlan.filter(r=>(r.rec-r.planned)>0).sort((a,b)=> (b.risk)-(a.risk)).slice(0,10);
+  const best  = withPlan.filter(r=>(r.planned-r.rec)>0).sort((a,b)=> (b.risk)-(a.risk)).slice(0,10);
+
+  el.topWorst.innerHTML = worst.map(r=>{
+    const diff = r.rec - r.planned;
+    return `
+      <tr>
+        <td>${escapeHtml(r.cluster)}</td><td>${escapeHtml(r.makt)}</td><td>${escapeHtml(r.route)}</td><td>${escapeHtml(r.dir)}</td><td>${escapeHtml(r.winOrHour)}</td>
+        <td class="mono">${r.nUsed}</td><td class="mono">${fmt(r.planned,1)}</td><td class="mono">${fmt(r.cv,2)}</td>
+        <td class="mono">${fmt(r.rec,1)}</td><td class="mono">${fmt(diff,1)}</td>
+        <td><span class="badge bad">${r.risk}</span></td>
+        <td class="mono">${fmt(diff,1)}</td>
+      </tr>
+    `;
+  }).join('') || `<tr><td colspan="12" class="muted">אין מספיק Planned/פער חיובי להצגה.</td></tr>`;
+
+  el.topBest.innerHTML = best.map(r=>{
+    const diff = r.planned - r.rec;
+    return `
+      <tr>
+        <td>${escapeHtml(r.cluster)}</td><td>${escapeHtml(r.makt)}</td><td>${escapeHtml(r.route)}</td><td>${escapeHtml(r.dir)}</td><td>${escapeHtml(r.winOrHour)}</td>
+        <td class="mono">${r.nUsed}</td><td class="mono">${fmt(r.planned,1)}</td><td class="mono">${fmt(r.cv,2)}</td>
+        <td class="mono">${fmt(r.rec,1)}</td><td class="mono">${fmt(r.rec-r.planned,1)}</td>
+        <td><span class="badge warn">${r.risk}</span></td>
+        <td class="mono">${fmt(diff,1)}</td>
+      </tr>
+    `;
+  }).join('') || `<tr><td colspan="12" class="muted">אין מספיק Planned/עודף חיובי להצגה.</td></tr>`;
+
+  // Charts
+  drawHistogram(el.cvHist, used, rec);
+
+  // trend by hour
+  const byHourVals = Array.from({length:24}, ()=>[]);
+  for(const r of records){
+    if(isFinite(r.durMin) && r.hour>=0 && r.hour<=23) byHourVals[r.hour].push(r.durMin);
+  }
+  const byHourMean = new Array(24).fill(null);
+  const byHourRec  = new Array(24).fill(null);
+
+  for(let h=0;h<24;h++){
+    const cleanedH = removeOutliers(byHourVals[h], el.outMode.value);
+    const usedH = cleanedH.used;
+    if(usedH.length>=3){
+      const mH = mean(usedH);
+      const cvH = (mH && mH>0) ? (std(usedH)/mH) : 0;
+      byHourMean[h] = mH;
+
+      const pctH = (el.policy.value==='manual') ? (parseInt(el.pct.value,10)||85)
+        : clamp((isPeak(h)?90:85) + (cvH>0.35?3: cvH>0.25?1:0) + (usedH.length<20?2:0), 50, 99);
+      byHourRec[h] = percentile(usedH, pctH);
+    }
+  }
+  drawTrend(el.cvTrend, byHourMean, byHourRec);
+
+  // Ops list
+  const ops = worst
+    .filter(r=>r.risk>=60 && (r.rec-r.planned)>=2)
+    .slice(0,8)
+    .map(r=>{
+      const add = Math.ceil(r.rec - r.planned);
+      return `ב־${r.cluster||'—'} | מק״ט ${r.makt||'—'} | קו ${r.route||'—'} | כיוון ${r.dir||'—'} | ${r.winOrHour}: להוסיף ~${add} דק׳ (Risk ${r.risk}, CV ${fmt(r.cv,2)}, N=${r.nUsed}).`;
+    });
+
+  el.ops.innerHTML = ops.length ? ops.map(x=>`<li>${escapeHtml(x)}</li>`).join('') : `<li class="muted">אין כרגע “חוסר תקן” מובהק לפי הסינון הנוכחי.</li>`;
+}
+
+/* ---------- Refresh (AUTO update on every change) ---------- */
+function refreshAll(){
+  if(!DATA.length) return;
+  const recs = filterRecords();
+  if(!recs.length){
+    showWarn('אין נתונים אחרי הסינון/החרגות. נסה להרחיב טווח תאריכים או להסיר החרגות.');
+    setKPI('0','—','—','—','—');
+    el.tbl.innerHTML = '';
+    el.topWorst.innerHTML = '';
+    el.topBest.innerHTML = '';
+    el.ops.innerHTML = '<li class="muted">אין נתונים להצגה.</li>';
+    clearCanvas(el.cvHist);
+    clearCanvas(el.cvTrend);
+    return;
+  }
+  hideWarn();
+  renderMain(recs);
+}
+
+/* ---------- Export ---------- */
+function downloadBlob(filename, blob){
+  const a = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 500);
+}
+function tableToCSV(rows){
+  const cols = [
+    'cluster','makt','route','dir','dayType','winOrHour',
+    'nRaw','nUsed','removed',
+    'mean','median','std','cv',
+    'p85','p90','p95',
+    'planned','gap','rec','pctApplied','risk','status'
+  ];
+  const esc = (x)=>{
+    const s = (x===null || x===undefined) ? '' : String(x);
+    if(/[,"\n\r]/.test(s)) return `"${s.replace(/"/g,'""')}"`;
+    return s;
+  };
+  const head = cols.join(',');
+  const lines = rows.map(r => cols.map(c => {
+    const v = r[c];
+    if(typeof v === 'number') return esc(Number(v).toFixed(4));
+    return esc(v);
+  }).join(','));
+  return [head].concat(lines).join('\n');
+}
+function toYAML(rows){
+  const q = (v)=>{
+    if(v===null || v===undefined) return 'null';
+    if(typeof v === 'number') return (isFinite(v)? String(v) : 'null');
+    const s = String(v);
+    if(s==='' ) return '""';
+    if(/[:\-\#\{\}\[\]\n\r]/.test(s) || s.includes('"') || s.includes("'")){
+      return `"${s.replace(/\\/g,'\\\\').replace(/"/g,'\\"')}"`;
+    }
+    return s;
+  };
+  const cols = [
+    'cluster','makt','route','dir','dayType','winOrHour',
+    'nRaw','nUsed','removed',
+    'mean','median','std','cv',
+    'p85','p90','p95',
+    'planned','gap','rec','pctApplied','risk','status'
+  ];
+  return rows.map(r=>{
+    let s = `- cluster: ${q(r.cluster)}\n`;
+    for(const c of cols.slice(1)){
+      s += `  ${c}: ${q(r[c])}\n`;
+    }
+    return s;
+  }).join('');
+}
+
+/* ---------- Events & Init ---------- */
+function resetAll(){
+  FILES=[]; ALL_ROWS=[]; HEADERS=[]; DATA=[]; M=null; LAST_TABLE=[]; EX_RANGES=[];
+  el.filesCount.textContent='0';
+  el.filesList.innerHTML='';
+  el.rawCount.textContent='0';
+  el.okCount.textContent='0';
+  el.outCount.textContent='0';
+  hideError(); hideWarn();
+  el.main.style.display='none';
+  el.tbl.innerHTML='';
+  el.topWorst.innerHTML='';
+  el.topBest.innerHTML='';
+  el.ops.innerHTML='';
+  clearCanvas(el.cvHist);
+  clearCanvas(el.cvTrend);
+  renderExList();
+}
+async function handlePickedFiles(fileList){
+  hideError(); hideWarn();
+  if(!fileList || !fileList.length){
+    showWarn('לא נבחרו קבצים.');
+    return;
+  }
+  setLoading(true, 'קורא ומאחד קבצים…');
+  await parseFiles(fileList);
+  setLoading(false, '');
+
+  if(!ALL_ROWS.length){
+    showError('לא נמצאו שורות בקבצים או שהפורמט לא נקרא. נסה CSV אמיתי (לא Excel/Preview).');
+    return;
+  }
+  buildMappingUI();
+  updateDepState();
+  showWarn('בחר/אשר מיפוי ואז לחץ “יישם מיפוי + חשב”.');
+}
+function init(){
+  updateDepState();
+  renderExList();
+
+  // Drag & Drop
+  el.drop.addEventListener('dragover', (e)=>{ e.preventDefault(); el.drop.classList.add('drag'); });
+  el.drop.addEventListener('dragleave', ()=> el.drop.classList.remove('drag'));
+  el.drop.addEventListener('drop', async (e)=>{
+    e.preventDefault();
+    el.drop.classList.remove('drag');
+    const files = e.dataTransfer?.files;
+    await handlePickedFiles(files);
+  });
+
+  // File input change
+  el.file.addEventListener('change', async ()=>{
+    await handlePickedFiles(el.file.files);
+    // allow picking same file again
+    el.file.value = '';
+  });
+
+  // Reset
+  el.btnReset.addEventListener('click', resetAll);
+
+  // Apply mapping
+  el.btnApplyMap.addEventListener('click', ()=>{
+    const ok = normalizeAllRows();
+    if(!ok) return;
+    el.main.style.display='grid';
+    populateFilterOptions();
+    refreshAll();
+  });
+
+  // Policy + pct
+  el.policy.addEventListener('change', ()=>{
+    el.manualBox.style.display = (el.policy.value==='manual') ? 'block' : 'none';
+    refreshAll();
+  });
+  el.pct.addEventListener('input', ()=>{
+    el.pctTxt.textContent = 'P'+el.pct.value;
+    refreshAll();
+  });
+
+  // Ex ranges
+  el.btnAddEx.addEventListener('click', ()=>{
+    const from = el.exFrom.value;
+    const to = el.exTo.value;
+    if(!from || !to){
+      showWarn('בחר תאריך התחלה וסיום להחרגה.');
+      return;
+    }
+    const a = (from<=to) ? {fromISO:from, toISO:to} : {fromISO:to, toISO:from};
+    EX_RANGES.push(a);
+    el.exFrom.value=''; el.exTo.value='';
+    renderExList();
+    refreshAll();
+  });
+
+  // Auto refresh for every filter control
+  const autoControls = [
+    el.fCluster, el.fMakt, el.fRoute, el.fDir, el.fDay, el.fWin, el.fHour,
+    el.fFrom, el.fTo,
+    el.gran, el.outMode, el.minN
+  ];
+  autoControls.forEach(c=>{
+    c.addEventListener('change', refreshAll);
+    c.addEventListener('input', refreshAll);
+  });
+
+  // Export
+  el.btnExport.addEventListener('click', ()=>{
+    if(!LAST_TABLE.length){ showWarn('אין טבלה לייצוא. טען קבצים וחשב.'); return; }
+    const csv = tableToCSV(LAST_TABLE);
+    downloadBlob('standards_export.csv', new Blob([csv], {type:'text/csv;charset=utf-8'}));
+  });
+  el.btnExportJSON.addEventListener('click', ()=>{
+    if(!LAST_TABLE.length){ showWarn('אין טבלה לייצוא.'); return; }
+    const txt = JSON.stringify(LAST_TABLE, null, 2);
+    downloadBlob('standards_export.json', new Blob([txt], {type:'application/json;charset=utf-8'}));
+  });
+  el.btnExportYAML.addEventListener('click', ()=>{
+    if(!LAST_TABLE.length){ showWarn('אין טבלה לייצוא.'); return; }
+    const yml = toYAML(LAST_TABLE);
+    downloadBlob('standards_export.yaml', new Blob([yml], {type:'text/yaml;charset=utf-8'}));
+  });
+
+  // Modal
+  el.btnHelp.addEventListener('click', ()=>{ el.modalBack.style.display='flex'; });
+  el.btnClose.addEventListener('click', ()=>{ el.modalBack.style.display='none'; });
+  el.modalBack.addEventListener('click', (e)=>{
+    if(e.target === el.modalBack) el.modalBack.style.display='none';
+  });
+
+  // initial pct label
+  el.pctTxt.textContent = 'P'+el.pct.value;
+}
+init();
+</script>
+</body>
+</html>
