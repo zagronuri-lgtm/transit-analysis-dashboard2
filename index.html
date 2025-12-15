@@ -4,45 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>מערכת ניתוח זמני תקן (Offline-First)</title>
+
   <style>
     :root{
-      --bg:#0b1220;
-      --card:#0f1b33;
-      --card2:#0e1830;
-      --text:#e6eefc;
-      --muted:#9fb0d0;
-      --line:rgba(255,255,255,.10);
+      --bg:#ffffff;
+      --card:#ffffff;
+      --text:#111827;     /* שחור */
+      --muted:#4b5563;
+      --line:rgba(17,24,39,.14);
       --accent:#7c3aed;
-      --accent2:#22c55e;
+      --accent2:#16a34a;
       --warn:#f59e0b;
       --bad:#ef4444;
       --good:#10b981;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       --font: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
+
     *{box-sizing:border-box}
     body{
-      margin:0; font-family:var(--font);
-      background: radial-gradient(900px 400px at 80% -20%, rgba(124,58,237,.30), transparent 55%),
-                  radial-gradient(900px 400px at 10% 0%, rgba(34,197,94,.18), transparent 55%),
-                  var(--bg);
+      margin:0;
+      font-family:var(--font);
+      background:var(--bg);
       color:var(--text);
       min-height:100vh;
     }
-    a{color:#bfa7ff}
+    a{color:var(--accent)}
     .wrap{max-width:1200px;margin:0 auto;padding:18px}
+
     header{
       display:flex;gap:12px;align-items:center;justify-content:space-between;
       padding:16px 16px;border:1px solid var(--line);border-radius:18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      box-shadow: 0 18px 40px rgba(0,0,0,.22);
+      background:#fff;
+      box-shadow: 0 10px 24px rgba(17,24,39,.08);
     }
     .title h1{margin:0;font-size:22px;letter-spacing:.2px}
     .title p{margin:6px 0 0;color:var(--muted);font-size:13px}
+
     .pill{
       display:inline-flex;align-items:center;gap:8px;
       padding:10px 12px;border-radius:14px;border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
+      background:#f9fafb;
       font-size:12px;color:var(--muted)
     }
     .pill b{color:var(--text)}
@@ -50,81 +52,93 @@
     @media(min-width:980px){ .grid.cols2{grid-template-columns:1.2fr .8fr} }
     @media(min-width:980px){ .grid.cols3{grid-template-columns:1fr 1fr 1fr} }
     @media(min-width:980px){ .grid.cols4{grid-template-columns:repeat(4, 1fr)} }
+
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
+      background:#fff;
       border:1px solid var(--line);
       border-radius:18px;
       padding:14px;
-      box-shadow: 0 16px 36px rgba(0,0,0,.20);
+      box-shadow: 0 10px 24px rgba(17,24,39,.08);
     }
     .card h2{margin:0 0 10px;font-size:15px}
     .muted{color:var(--muted)}
     .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
     .btn{
       cursor:pointer;
       border:1px solid var(--line);
-      background: rgba(255,255,255,.05);
+      background:#fff;
       color:var(--text);
       padding:10px 12px;
       border-radius:14px;
-      font-weight:700;
-      transition: transform .08s ease, background .12s ease;
+      font-weight:800;
+      transition: transform .08s ease, background .12s ease, border-color .12s ease;
       user-select:none;
     }
-    .btn:hover{background: rgba(255,255,255,.08)}
+    .btn:hover{background:#f9fafb}
     .btn:active{transform: translateY(1px)}
-    .btn.primary{background: rgba(124,58,237,.35); border-color: rgba(124,58,237,.55)}
-    .btn.green{background: rgba(34,197,94,.25); border-color: rgba(34,197,94,.45)}
-    .btn.red{background: rgba(239,68,68,.22); border-color: rgba(239,68,68,.40)}
+    .btn.primary{background: rgba(124,58,237,.10); border-color: rgba(124,58,237,.35)}
+    .btn.green{background: rgba(22,163,74,.10); border-color: rgba(22,163,74,.35)}
+    .btn.red{background: rgba(239,68,68,.10); border-color: rgba(239,68,68,.35)}
     .btn.small{padding:7px 10px;border-radius:12px;font-size:12px}
+
     .drop{
       padding:18px;
       border-radius:18px;
-      border:2px dashed rgba(255,255,255,.18);
-      background: rgba(255,255,255,.03);
+      border:2px dashed rgba(17,24,39,.18);
+      background:#fff;
       text-align:center;
     }
-    .drop.drag{border-color: rgba(124,58,237,.8); background: rgba(124,58,237,.10)}
+    .drop.drag{border-color: rgba(124,58,237,.8); background: rgba(124,58,237,.06)}
     .drop p{margin:6px 0;color:var(--muted)}
+
     input, select{
-      background: rgba(255,255,255,.06);
-      border:1px solid var(--line);
-      color:var(--text);
+      background:#fff;
+      border:1px solid rgba(17,24,39,.20);
+      color:#111827; /* שחור בשדות */
       border-radius:12px;
       padding:9px 10px;
       outline:none;
       min-height:38px;
     }
-    input[type="date"]{color-scheme: dark;}
+    input[type="date"]{color-scheme: light;}
     input[type="range"]{width:220px}
     label{font-size:12px;color:var(--muted);display:block;margin-bottom:6px}
     .field{min-width:170px}
     .mono{font-family:var(--mono)}
+
     .kpi{
       padding:12px;border-radius:18px;border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
+      background:#fff;
     }
     .kpi .v{font-size:22px;font-weight:900;line-height:1.1}
     .kpi .l{font-size:12px;color:var(--muted);margin-top:5px}
+
     .badge{
       display:inline-flex;align-items:center;gap:8px;
       padding:6px 10px;border-radius:999px;border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
+      background:#f9fafb;
       font-size:12px;color:var(--muted)
     }
-    .badge.good{background: rgba(16,185,129,.18); border-color: rgba(16,185,129,.35); color:#bff7e7}
-    .badge.bad{background: rgba(239,68,68,.18); border-color: rgba(239,68,68,.38); color:#ffd0d0}
-    .badge.warn{background: rgba(245,158,11,.18); border-color: rgba(245,158,11,.35); color:#ffe6b3}
-    .badge.purp{background: rgba(124,58,237,.20); border-color: rgba(124,58,237,.40); color:#e8dbff}
+    .badge.good{background:#ecfdf5;border-color:#a7f3d0;color:#065f46}
+    .badge.bad{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+    .badge.warn{background:#fffbeb;border-color:#fde68a;color:#92400e}
+    .badge.purp{background:#f5f3ff;border-color:#ddd6fe;color:#5b21b6}
+
     .tableWrap{overflow:auto;max-height:440px;border-radius:16px;border:1px solid var(--line)}
     table{width:100%;border-collapse:collapse;font-size:13px}
-    th,td{padding:10px 10px;border-bottom:1px solid rgba(255,255,255,.06);text-align:right;white-space:nowrap}
-    th{position:sticky;top:0;background: rgba(10,18,34,.96);backdrop-filter: blur(6px);z-index:1;color:#cfe0ff}
-    tr:hover td{background: rgba(255,255,255,.03)}
+    th,td{padding:10px 10px;border-bottom:1px solid rgba(17,24,39,.08);text-align:right;white-space:nowrap}
+    th{position:sticky;top:0;background:#f3f4f6;z-index:1;color:#111827}
+    tr:hover td{background:#f9fafb}
+
     .twoCanv{display:grid;gap:12px}
     @media(min-width:980px){ .twoCanv{grid-template-columns:1fr 1fr} }
-    canvas{width:100%;height:280px;background: rgba(255,255,255,.02);border:1px solid var(--line);border-radius:16px}
+    canvas{width:100%;height:280px;background:#fff;border:1px solid var(--line);border-radius:16px}
+
     .hr{height:1px;background: var(--line);margin:10px 0}
+    .hint{color:var(--muted);font-size:12px;line-height:1.6}
+    .smallNote{font-size:12px;color:var(--muted)}
+
     .modalBack{
       position:fixed;inset:0;display:none;align-items:center;justify-content:center;
       background: rgba(0,0,0,.55);z-index:9999;padding:16px;
@@ -133,78 +147,28 @@
       width:min(980px, 100%);
       max-height: min(85vh, 900px);
       overflow:auto;
-      background: #0b1428;
-      border:1px solid rgba(255,255,255,.12);
+      background:#fff;
+      border:1px solid rgba(17,24,39,.14);
       border-radius:18px;
       padding:16px;
-      box-shadow: 0 30px 80px rgba(0,0,0,.55);
+      box-shadow: 0 30px 80px rgba(0,0,0,.25);
     }
     .modal h3{margin:0 0 10px}
     .modal p{color:var(--muted);line-height:1.55}
     .modal ul{color:var(--muted);line-height:1.6}
     .modal .x{float:left}
-    .hint{
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.6
-    }
-    .smallNote{font-size:12px;color:var(--muted)}
-
-    /* =========================
-       LIGHT THEME OVERRIDES
-       ========================= */
-    :root{
-      --bg:#ffffff;
-      --card:#ffffff;
-      --card2:#ffffff;
-      --text:#111827;
-      --muted:#4b5563;
-      --line:rgba(17,24,39,.14);
-    }
-    body{
-      background:#ffffff !important;
-      color:var(--text) !important;
-    }
-    header,.card{
-      background:#ffffff !important;
-      box-shadow: 0 10px 24px rgba(17,24,39,.08) !important;
-    }
-    .pill,.badge{
-      background:#f9fafb !important;
-      border-color: rgba(17,24,39,.14) !important;
-      color: var(--muted) !important;
-    }
-    .pill b{color:var(--text)!important;}
-    .badge.good{background:#ecfdf5!important;border-color:#a7f3d0!important;color:#065f46!important;}
-    .badge.bad{background:#fef2f2!important;border-color:#fecaca!important;color:#991b1b!important;}
-    .badge.warn{background:#fffbeb!important;border-color:#fde68a!important;color:#92400e!important;}
-    .badge.purp{background:#f5f3ff!important;border-color:#ddd6fe!important;color:#5b21b6!important;}
-    input,select{
-      background:#ffffff !important;
-      color:#111827 !important;
-      border:1px solid rgba(17,24,39,.20) !important;
-    }
-    input[type="date"]{color-scheme: light;}
-    th{
-      background:#f3f4f6 !important;
-      color:#111827 !important;
-    }
-    tr:hover td{background:#f9fafb !important;}
-    .tableWrap{border-color: rgba(17,24,39,.14) !important;}
-    .drop{background:#ffffff !important;}
-    .drop.drag{background:#f5f3ff !important; border-color: rgba(124,58,237,.8) !important;}
-    canvas{background:#ffffff !important;}
   </style>
 </head>
+
 <body>
 <div class="wrap">
   <header>
     <div class="title">
       <h1>מערכת ניתוח זמני תקן — Offline-First 🚌</h1>
-      <p>טוען CSV מקומית (Drag&Drop או בחירה), סינונים, ניקוי חריגים, אחוזונים דינמיים, Top-10 בעייתיים/מצטיינים, וייצוא.</p>
+      <p>טוען CSV מקומית, סינונים, ניקוי חריגים, אחוזונים דינמיים, Top-10 וייצוא.</p>
     </div>
     <div class="row">
-      <div class="pill"><span class="mono">v23</span> <b>ללא תלות ב-CDN</b></div>
+      <div class="pill"><span class="mono">v23.1</span> <b>Offline</b></div>
       <button id="btnHelp" class="btn primary">מדריך קצר</button>
     </div>
   </header>
@@ -218,7 +182,7 @@
           <button id="btnReset" class="btn red">איפוס</button>
         </div>
         <p>אפשר לגרור לכאן קבצי CSV (אחד או יותר). כל הקבצים יתאחדו.</p>
-        <p class="smallNote">טיפ: אל תפתח את הקובץ ב־Preview של Gmail/Drive. תוריד למחשב ותפתח ב-Chrome/Edge.</p>
+        <p class="smallNote">אם פתחת ב-Preview (Gmail/Drive) זה עלול לחסום JS. הורד למחשב ופתח ב-Chrome/Edge.</p>
         <input id="file" type="file" accept=".csv,text/csv" multiple style="display:none"/>
       </div>
 
@@ -243,7 +207,7 @@
 
     <div class="card">
       <h2>2) מיפוי עמודות (Auto + Override)</h2>
-      <div class="hint">המערכת מנסה לזהות עמודות אוטומטית. אם משהו לא מסתדר — בחר ידנית.</div>
+      <div class="hint">המערכת מנסה לזהות עמודות אוטומטית. אם משהו לא מסתדר — בחר ידנית ואז לחץ “יישם”.</div>
 
       <div class="grid cols3" style="margin-top:10px">
         <div class="field">
@@ -367,7 +331,7 @@
           </div>
         </div>
         <div class="field">
-          <label>החרגת טווחי תאריכים (למשל הפגנות/חורף)</label>
+          <label>החרגת טווחי תאריכים</label>
           <div class="row" style="gap:8px">
             <input id="exFrom" type="date"/>
             <input id="exTo" type="date"/>
@@ -422,12 +386,12 @@
       <div class="card">
         <h2>4) היסטוגרם — התפלגות זמני נסיעה</h2>
         <canvas id="cvHist" width="900" height="280"></canvas>
-        <div class="hint">ציר X = זמן נסיעה (דקות), ציר Y = כמה נסיעות נפלו בכל טווח. הקו הסגול = תקן מומלץ.</div>
+        <div class="hint">ציר X = זמן (דקות), ציר Y = כמות. הקו הסגול = תקן מומלץ.</div>
       </div>
       <div class="card">
         <h2>5) מגמה לפי שעה — ממוצע מול תקן</h2>
         <canvas id="cvTrend" width="900" height="280"></canvas>
-        <div class="hint">מציג ממוצע (קו בהיר) מול תקן (סגול) לכל שעה. אם אין נתונים בשעה — זה יופיע כריק.</div>
+        <div class="hint">ממוצע מול תקן לכל שעה. אם אין נתונים בשעה — יהיה ריק.</div>
       </div>
     </div>
 
@@ -440,13 +404,13 @@
               <tr>
                 <th>אשכול</th><th>מק״ט</th><th>קו</th><th>כיוון</th><th>חלון/שעה</th>
                 <th class="mono">N</th><th class="mono">Planned</th><th class="mono">CV</th>
-                <th>Rec</th><th class="mono">פער</th><th>Risk</th><th class="mono">חוסר</th>
+                <th class="mono">Rec</th><th class="mono">Gap</th><th class="mono">Risk</th>
               </tr>
             </thead>
             <tbody id="topWorst"></tbody>
           </table>
         </div>
-        <div class="hint">“חוסר” = (Rec − Planned) כשחיובי. אם אין תכנון בקבצים — הרשימה תישאר ריקה.</div>
+        <div class="hint">אם אין עמודת תכנון (Planned) בקבצים — הטבלה תישאר ריקה.</div>
       </div>
 
       <div class="card">
@@ -457,31 +421,30 @@
               <tr>
                 <th>אשכול</th><th>מק״ט</th><th>קו</th><th>כיוון</th><th>חלון/שעה</th>
                 <th class="mono">N</th><th class="mono">Planned</th><th class="mono">CV</th>
-                <th>Rec</th><th class="mono">פער</th><th>Risk</th><th class="mono">עודף</th>
+                <th class="mono">Rec</th><th class="mono">Gap</th><th class="mono">Risk</th>
               </tr>
             </thead>
             <tbody id="topBest"></tbody>
           </table>
         </div>
-        <div class="hint">“עודף” = (Planned − Rec) כשחיובי. זה מקום לחסוך תקן בלי לפגוע באמינות (בזהירות!).</div>
       </div>
     </div>
 
     <div class="card">
-      <h2>8) טבלת תקנים מומלצים (לפי הרזולוציה שנבחרה)</h2>
+      <h2>8) טבלת תקנים מומלצים</h2>
       <div class="row">
-        <span class="badge">הערה: עמודות <b>Rec</b> + <b>Pct</b> מציגות את התקן והאחוזון שבאמת הופעל (דינמי/ידני).</span>
+        <span class="badge">Rec = התקן המומלץ בפועל, Pct = האחוזון שהופעל (דינמי/ידני).</span>
       </div>
       <div class="tableWrap" style="margin-top:10px">
         <table>
           <thead>
             <tr>
               <th>אשכול</th><th>מק״ט</th><th>קו</th><th>כיוון</th><th>חלון/שעה</th>
-              <th class="mono">N (raw)</th><th class="mono">N (used)</th><th class="mono">Removed</th>
+              <th class="mono">N(raw)</th><th class="mono">N(used)</th><th class="mono">Removed</th>
               <th class="mono">Mean</th><th class="mono">Median</th><th class="mono">STD</th><th class="mono">CV</th>
               <th class="mono">P85</th><th class="mono">P90</th><th class="mono">P95</th>
               <th class="mono">Planned</th><th class="mono">Gap</th>
-              <th>Rec</th><th class="mono">Pct</th><th>Risk</th><th>סטטוס</th>
+              <th class="mono">Rec</th><th class="mono">Pct</th><th class="mono">Risk</th><th>סטטוס</th>
             </tr>
           </thead>
           <tbody id="tbl"></tbody>
@@ -490,14 +453,14 @@
     </div>
 
     <div class="card">
-      <h2>המלצות אופרטיביות למחר בבוקר</h2>
+      <h2>המלצות אופרטיביות</h2>
       <ul id="ops" class="muted" style="margin:8px 0 0 0; padding-right:18px"></ul>
-      <div class="hint" style="margin-top:8px">ההמלצות נבנות אוטומטית מהטבלאות: איפה Risk גבוה + חוסר תקן בשיא/שעה צפופה.</div>
+      <div class="hint" style="margin-top:8px">נבנה אוטומטית מהטבלה: Risk גבוה + Gap חיובי.</div>
     </div>
   </div>
 
   <footer class="hint" style="margin:14px 4px 6px">
-    קובץ יחיד. עובד גם בלי אינטרנט. כדי להפוך לדף אינטרנט: העלה ל-GitHub Pages / Netlify / SharePoint כקובץ HTML סטטי.
+    קובץ יחיד. עובד גם בלי אינטרנט. ל- GitHub Pages: העלה כ- <span class="mono">index.html</span> והפעל Pages.
   </footer>
 </div>
 
@@ -505,28 +468,23 @@
 <div id="modalBack" class="modalBack">
   <div class="modal">
     <button class="btn x" id="btnClose">סגור ✕</button>
-    <h3>מדריך קצר — בשפה פשוטה</h3>
+    <h3>מדריך קצר</h3>
 
-    <p><b>מה זה “זמן תקן” כאן?</b> זה הזמן שאנחנו רוצים להגדיר בלו״ז כדי שהנסיעה תעמוד ברוב המקרים בזמן ולא תייצר איחורים.</p>
+    <p><b>מה זה “זמן תקן” כאן?</b> הזמן שנרצה להגדיר בלו״ז כדי לעמוד ברוב המקרים בזמן.</p>
 
     <ul>
-      <li><b>Histogram (היסטוגרם)</b>: מראה כמה נסיעות היו בכל טווח של דקות. אם יש “זנב ימני” ארוך — יש הרבה נסיעות איטיות לפעמים.</li>
-      <li><b>אחוזון (P85/P90…)</b>: לדוגמה P90 אומר: 90% מהנסיעות היו קצרות או שוות לזמן הזה. זה זמן תקן “שמרני” יותר מממוצע.</li>
-      <li><b>Mean / Median</b>: ממוצע מול חציון. אם החציון נמוך מהממוצע — כנראה שיש חריגים שמושכים למעלה.</li>
-      <li><b>STD</b>: סטיית תקן — כמה הזמנים “מתפזרים”. גבוה = הרבה שונות.</li>
-      <li><b>CV</b>: סטיית תקן יחסית לממוצע. זה מדד מצוין להשוואה בין קווים ארוכים וקצרים. כלל אצבע: מעל ~0.25 = שונות גבוהה.</li>
-      <li><b>Planned</b>: זמן התכנון שיש לך בקובץ (אם יש). אנחנו מציגים אותו כ-Median כדי להיות יציב.</li>
-      <li><b>Gap</b>: Rec − Planned. <b>חיובי</b> = חסר תקן (תכנון קצר מדי). <b>שלילי</b> = עודף תקן.</li>
-      <li><b>Risk</b>: ציון 0–100 שמדרג איפה הכי “כואב” להתערב. משקלל: שונות (CV), גודל פער מול תכנון, וכמה מעט נתונים יש.</li>
+      <li><b>Histogram</b>: התפלגות זמני נסיעה.</li>
+      <li><b>P85/P90</b>: אחוזון. למשל P90 = 90% מהנסיעות קצרות או שוות לערך הזה.</li>
+      <li><b>CV</b>: שונות יחסית. גבוה = קו “לא יציב”.</li>
+      <li><b>Gap</b>: Rec − Planned. חיובי = חסר תקן. שלילי = עודף תקן.</li>
+      <li><b>Risk</b>: ציון 0–100: משקלל שונות, פער, ומיעוט דגימות.</li>
     </ul>
-
-    <p><b>מה לתקן קודם?</b> בדרך כלל מתחילים איפה שיש <b>חוסר תקן</b> + <b>Risk גבוה</b> (במיוחד בשיא). שונות גבוהה לבדה לא תמיד אומרת שצריך להוסיף זמן — לפעמים זה בעיית תפעול/עומס נקודתי, ואז צריך טיפול אחר (פיקוח, נת״צ, שינוי חלונות).</p>
 
     <div class="hr"></div>
     <h3>FAQ קצר</h3>
-    <p><b>1) למה יש לי “חוסר תקן” אבל CV נמוך?</b> כנראה שהקו עקבי, פשוט התכנון קצר מדי. קל לתקן — להוסיף דקות בתקופה הנכונה (שיא/שעה).</p>
-    <p><b>2) למה יש CV גבוה אבל Gap קטן?</b> התכנון אולי בסדר “בממוצע”, אבל יש ימים/שעות קיצון. פה כדאי להשתמש בהחרגת תאריכים/טווחים ולבדוק אם זו תופעה קבועה או אירועים.</p>
-    <p><b>3) למה Top-10 ריק?</b> כי אין עמודת תכנון בקבצים או שלא זוהתה. אפשר עדיין להמליץ תקן לפי אחוזונים, אבל “חוסר/עודף” צריך Planned.</p>
+    <p><b>למה Top-10 ריק?</b> אין Planned בקבצים או שלא זוהה במיפוי.</p>
+    <p><b>למה “לא נטען”?</b> בדרך כלל פתיחה ב-Preview שחוסם JavaScript. הורד ופתח בדפדפן.</p>
+    <p><b>למה הנתונים “לא זזים”?</b> בגרסה הזו כל שינוי בסינון מרנדר מחדש אוטומטית.</p>
   </div>
 </div>
 
@@ -620,18 +578,19 @@ const el = {
 
 /* ---------- State ---------- */
 let FILES = [];
-let ALL_ROWS = [];      // raw parsed objects from CSV(s)
-let HEADERS = [];       // union headers
+let ALL_ROWS = [];
+let HEADERS = [];
 
-let M = null;           // mapping
-let DATA = [];          // normalized records after mapping+QA (each: {cluster,makt,route,dir,dateISO,hour,win,dayType,durMin,plannedMin})
-let DROPPED = {missing:0, invalid:0, parse:0, dateRange:0, excluded:0, outlier:0};
+let M = null;           // mapping object
+let DATA = [];          // normalized records
+let EX_RANGES = [];     // [{fromISO,toISO}]
+let LAST_TABLE = [];    // last computed summary table
 
-let EX_RANGES = [];     // list of {fromISO,toISO}
-let LAST_TABLE = [];    // computed row summaries
+let COUNTS = { raw:0, ok:0, out:0 };
 
-/* ---------- Utility ---------- */
+/* ---------- Utilities ---------- */
 const pad2 = (n)=> String(n).padStart(2,'0');
+const clamp = (x,a,b)=> Math.max(a, Math.min(b,x));
 const escapeHtml = (s)=> String(s??'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
 function showError(msg){ el.err.style.display='inline-flex'; el.err.textContent = msg; }
 function hideError(){ el.err.style.display='none'; el.err.textContent=''; }
@@ -642,14 +601,13 @@ function setLoading(on, msg){
   el.loadMsg.textContent = msg || '';
 }
 function updateDepState(){
-  // Offline-first: always OK. Still show hint for preview limitations.
   el.depState.innerHTML = `
-    <div><b>סטטוס:</b> קובץ Offline-First. אין תלות ב-CDN. אם “לא עובד” — לרוב זה בגלל פתיחה ב-Preview שחוסם JavaScript.</div>
-    <div class="smallNote">פתרון: הורד למחשב ופתח ב-Chrome/Edge (לא ב-Gmail/Drive Preview).</div>
+    <div><b>סטטוס:</b> Offline-First פעיל. אין תלות ב-CDN.</div>
+    <div class="smallNote">אם הכפתורים לא מגיבים — כנראה פתיחה ב-Preview שחוסם JavaScript. הורד למחשב ופתח ב-Chrome/Edge.</div>
   `;
 }
 
-/* CSV parsing (robust enough for typical exports) */
+/* ---------- CSV parsing ---------- */
 function detectDelimiter(headerLine){
   const cands=[',',';','\t','|'];
   let best=',', bestCount=-1;
@@ -677,16 +635,13 @@ function splitCsvLine(line, delim){
 }
 function parseCsvText(text){
   text = String(text||'').replace(/^\uFEFF/,'');
-  const lines = text.split(/\r\n|\n|\r/);
-  // remove fully empty trailing lines
-  const clean = lines.filter(l => l !== undefined && l !== null && String(l).trim().length>0);
-  if(!clean.length) return [];
-  const delim = detectDelimiter(clean[0]);
-  const headers = splitCsvLine(clean[0], delim).map(h=>String(h||'').trim());
+  const lines = text.split(/\r\n|\n|\r/).filter(l => String(l||'').trim().length>0);
+  if(!lines.length) return [];
+  const delim = detectDelimiter(lines[0]);
+  const headers = splitCsvLine(lines[0], delim).map(h=>String(h||'').trim());
   const rows=[];
-  for(let i=1;i<clean.length;i++){
-    const cols = splitCsvLine(clean[i], delim);
-    // skip if all empty
+  for(let i=1;i<lines.length;i++){
+    const cols = splitCsvLine(lines[i], delim);
     if(!cols.some(c=>String(c||'').trim().length)) continue;
     const r={};
     for(let j=0;j<headers.length;j++){
@@ -713,33 +668,30 @@ async function parseFiles(files){
 
   let raw=0;
   for(const f of fileArr){
-    try{
-      const txt = await readFileText(f);
-      const rows = parseCsvText(txt);
-      raw += rows.length;
-      ALL_ROWS = ALL_ROWS.concat(rows);
-      for(const r of rows){
-        for(const k of Object.keys(r||{})){
-          if(k && !HEADERS.includes(k)) HEADERS.push(k);
-        }
+    const txt = await readFileText(f);
+    const rows = parseCsvText(txt);
+    raw += rows.length;
+    ALL_ROWS = ALL_ROWS.concat(rows);
+    for(const r of rows){
+      for(const k of Object.keys(r||{})){
+        if(k && !HEADERS.includes(k)) HEADERS.push(k);
       }
-    }catch(e){
-      console.error(e);
     }
   }
+  COUNTS.raw = raw;
   el.rawCount.textContent = String(raw);
 }
 
-/* Mapping & parsing values */
+/* ---------- Mapping helpers ---------- */
 const SYN = {
-  date: ['date','Date','תאריך','TripSourceDate','service_date','TripDate','Date_'],
-  time: ['departure_time','Time','שעה','TripSourceTime','DepartureTime','Planned_Start_Time','start_time','TripStartTime','hour'],
-  dur:  ['actual_duration','Duration','Actual_Duration','ActualDuration','משך','TravelTime','duration','travel_time','ActualDurationSeconds','ActualDurationMinutes'],
-  cluster:['cluster','Cluster','ClusterName','אשכול','אשכולname','Depot','Region','cluster_name'],
-  makt: ['makt','מקט','מק״ט','RouteMakt','LineMakt','MaktLine','RouteMakat'],
-  route: ['route','Route','RouteId','RouteShortName','Line','line_id','קו','מספר קו','RouteNumber','LineNumber','route_num'],
+  date: ['date','Date','תאריך','service_date','TripDate','TripSourceDate'],
+  time: ['departure_time','Time','שעה','DepartureTime','start_time','TripStartTime','hour'],
+  dur:  ['actual_duration','Duration','ActualDuration','משך','TravelTime','duration','travel_time'],
+  cluster:['cluster','Cluster','אשכול','Depot','Region','cluster_name'],
+  makt: ['makt','מקט','מק״ט','RouteMakt','LineMakt','Makat'],
+  route: ['route_num','route','Route','קו','מספר קו','LineNumber','RouteNumber'],
   dir:  ['direction','Direction','כיוון','dir','DirectionId'],
-  plan: ['planned_duration','PlannedDuration','planned','Planned_Time','ScheduleDuration','ScheduledDuration','PlannedDurationMin','planned_minutes'],
+  plan: ['planned_duration','PlannedDuration','planned','ScheduleDuration','ScheduledDuration'],
   wd:   ['WeekDay','weekday','day_of_week','DOW','יום בשבוע']
 };
 function bestHeader(headers, keys){
@@ -749,7 +701,6 @@ function bestHeader(headers, keys){
     const idx = lower.indexOf(kk);
     if(idx>=0) return headers[idx];
   }
-  // fuzzy contains
   for(const k of keys){
     const kk = String(k).toLowerCase();
     const idx = lower.findIndex(h => h.includes(kk));
@@ -757,4 +708,410 @@ function bestHeader(headers, keys){
   }
   return '';
 }
+function fillSelect(selectEl, headers, selected){
+  selectEl.innerHTML = '';
+  const opt0 = document.createElement('option');
+  opt0.value = '';
+  opt0.textContent = '—';
+  selectEl.appendChild(opt0);
 
+  for(const h of headers){
+    const o = document.createElement('option');
+    o.value = h;
+    o.textContent = h;
+    selectEl.appendChild(o);
+  }
+  selectEl.value = selected || '';
+}
+function autoFillMapping(){
+  fillSelect(el.mDate, HEADERS, bestHeader(HEADERS, SYN.date));
+  fillSelect(el.mTime, HEADERS, bestHeader(HEADERS, SYN.time));
+  fillSelect(el.mDur, HEADERS, bestHeader(HEADERS, SYN.dur));
+  fillSelect(el.mCluster, HEADERS, bestHeader(HEADERS, SYN.cluster));
+  fillSelect(el.mMakt, HEADERS, bestHeader(HEADERS, SYN.makt));
+  fillSelect(el.mRoute, HEADERS, bestHeader(HEADERS, SYN.route));
+  fillSelect(el.mDir, HEADERS, bestHeader(HEADERS, SYN.dir));
+  fillSelect(el.mPlan, HEADERS, bestHeader(HEADERS, SYN.plan));
+  fillSelect(el.mWD, HEADERS, bestHeader(HEADERS, SYN.wd));
+}
+
+/* ---------- Parsing values ---------- */
+function toNumber(x){
+  const s = String(x??'').replace(/,/g,'').trim();
+  if(!s) return NaN;
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+function parseHHMMToHour(s){
+  s = String(s??'').trim();
+  if(!s) return null;
+
+  // allow "HH:MM[:SS]" or "HHMM"
+  if(s.includes(':')){
+    const parts = s.split(':').map(p=>toNumber(p));
+    const hh = parts[0];
+    if(Number.isFinite(hh)) return clamp(Math.floor(hh),0,23);
+    return null;
+  }
+  // digits
+  const dig = s.replace(/\D/g,'');
+  if(dig.length>=2){
+    const hh = Number(dig.slice(0,2));
+    if(Number.isFinite(hh)) return clamp(Math.floor(hh),0,23);
+  }
+  return null;
+}
+function parseDateAny(v){
+  const s = String(v??'').trim();
+  if(!s) return null;
+
+  // try YYYY-MM-DD
+  const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if(iso){
+    const d = new Date(`${iso[1]}-${iso[2]}-${iso[3]}T00:00:00`);
+    if(!isNaN(d.getTime())) return `${iso[1]}-${iso[2]}-${iso[3]}`;
+  }
+
+  // try DD/MM/YYYY or DD.MM.YYYY
+  const m = s.match(/^(\d{1,2})[\/\.](\d{1,2})[\/\.](\d{4})/);
+  if(m){
+    const dd = pad2(m[1]), mm = pad2(m[2]), yy = m[3];
+    const d = new Date(`${yy}-${mm}-${dd}T00:00:00`);
+    if(!isNaN(d.getTime())) return `${yy}-${mm}-${dd}`;
+  }
+
+  // fallback Date parse
+  const d = new Date(s);
+  if(!isNaN(d.getTime())){
+    const yy = d.getFullYear();
+    const mm = pad2(d.getMonth()+1);
+    const dd = pad2(d.getDate());
+    return `${yy}-${mm}-${dd}`;
+  }
+  return null;
+}
+function dayTypeFromISO(iso){
+  // JS: 0=Sunday ... 6=Saturday
+  const d = new Date(iso + 'T00:00:00');
+  const dow = d.getDay();
+  if(dow === 5) return 'ו';
+  if(dow === 6) return 'שבת';
+  return 'א-ה';
+}
+function windowFromHour(h){
+  if(h===null || h===undefined) return '—';
+  if(h>=6 && h<=9) return 'שיא בוקר';
+  if(h>=10 && h<=14) return 'ביניים';
+  if(h>=15 && h<=19) return 'שיא ערב';
+  if(h>=20 && h<=23) return 'לילה';
+  return 'לילה'; // 0-5
+}
+function parseDurationToMin(v, unitMode){
+  const s = String(v??'').trim();
+  if(!s) return NaN;
+
+  // explicit modes
+  if(unitMode === 'sec'){
+    const n = toNumber(s);
+    return Number.isFinite(n) ? n/60 : NaN;
+  }
+  if(unitMode === 'min'){
+    const n = toNumber(s);
+    return Number.isFinite(n) ? n : NaN;
+  }
+  if(unitMode === 'hhmm' || unitMode === 'hhmmss'){
+    if(!s.includes(':')) return NaN;
+    const parts = s.split(':').map(p=>toNumber(p));
+    const hh = parts[0], mm = parts[1];
+    const ss = parts[2] || 0;
+    if(!Number.isFinite(hh) || !Number.isFinite(mm)) return NaN;
+    return (hh*3600 + mm*60 + (Number.isFinite(ss)?ss:0))/60;
+  }
+
+  // auto mode
+  if(s.includes(':')){
+    const parts = s.split(':').map(p=>toNumber(p));
+    const hh = parts[0], mm = parts[1];
+    const ss = parts[2] || 0;
+    if(Number.isFinite(hh) && Number.isFinite(mm)){
+      return (hh*3600 + mm*60 + (Number.isFinite(ss)?ss:0))/60;
+    }
+  }
+  const n = toNumber(s);
+  if(!Number.isFinite(n)) return NaN;
+  // heuristic: if huge number -> seconds
+  if(n > 600) return n/60;
+  return n;
+}
+
+/* ---------- Stats helpers ---------- */
+function quantile(sortedArr, q){
+  if(!sortedArr.length) return NaN;
+  const pos = (sortedArr.length - 1) * q;
+  const base = Math.floor(pos);
+  const rest = pos - base;
+  if(sortedArr[base+1] !== undefined){
+    return sortedArr[base] + rest * (sortedArr[base+1]-sortedArr[base]);
+  }
+  return sortedArr[base];
+}
+function mean(arr){
+  if(!arr.length) return NaN;
+  let s=0;
+  for(const x of arr) s+=x;
+  return s/arr.length;
+}
+function std(arr){
+  if(arr.length<2) return 0;
+  const m = mean(arr);
+  let v=0;
+  for(const x of arr){ const d=x-m; v += d*d; }
+  return Math.sqrt(v/(arr.length-1));
+}
+function median(sortedArr){ return quantile(sortedArr, 0.5); }
+
+function filterOutliers(values, mode){
+  // expects raw numeric array
+  if(mode === 'off') return { used: values.slice(), removed: 0 };
+  if(values.length < 5) return { used: values.slice(), removed: 0 };
+
+  const s = values.slice().sort((a,b)=>a-b);
+  if(mode === 'iqr'){
+    const q1 = quantile(s, 0.25);
+    const q3 = quantile(s, 0.75);
+    const iqr = q3-q1;
+    const lo = q1 - 1.5*iqr;
+    const hi = q3 + 1.5*iqr;
+    const used = values.filter(x=>x>=lo && x<=hi);
+    return { used, removed: values.length-used.length };
+  }
+
+  // MAD
+  const med = quantile(s, 0.5);
+  const absDev = values.map(x=>Math.abs(x-med)).sort((a,b)=>a-b);
+  const mad = quantile(absDev, 0.5) || 0;
+  if(mad === 0) return { used: values.slice(), removed: 0 };
+  const k = 3.5; // robust threshold
+  const lo = med - k*1.4826*mad;
+  const hi = med + k*1.4826*mad;
+  const used = values.filter(x=>x>=lo && x<=hi);
+  return { used, removed: values.length-used.length };
+}
+
+/* ---------- Build normalized DATA ---------- */
+function buildMappingFromUI(){
+  return {
+    date: el.mDate.value,
+    time: el.mTime.value,
+    dur: el.mDur.value,
+    cluster: el.mCluster.value,
+    makt: el.mMakt.value,
+    route: el.mRoute.value,
+    dir: el.mDir.value,
+    plan: el.mPlan.value,
+    wd: el.mWD.value,
+    durUnit: el.durUnit.value,
+    gran: el.gran.value,
+    outMode: el.outMode.value,
+    minN: clamp(parseInt(el.minN.value||'10',10) || 10, 3, 9999)
+  };
+}
+function normalizeData(){
+  hideError(); hideWarn();
+  COUNTS.ok = 0;
+  COUNTS.out = 0;
+
+  M = buildMappingFromUI();
+
+  if(!M.date || !M.time || !M.dur){
+    showError('חסר מיפוי חובה: תאריך + שעה + משך בפועל. בחר ידנית ואז לחץ “יישם”.');
+    return false;
+  }
+
+  DATA = [];
+  for(const r of ALL_ROWS){
+    const dateISO = parseDateAny(r[M.date]);
+    const hour = parseHHMMToHour(r[M.time]);
+    const durMin = parseDurationToMin(r[M.dur], M.durUnit);
+
+    if(!dateISO || hour===null || !Number.isFinite(durMin) || durMin<=0){
+      continue;
+    }
+
+    const cluster = (M.cluster ? String(r[M.cluster]??'').trim() : '') || '—';
+    const makt = (M.makt ? String(r[M.makt]??'').trim() : '') || '—';
+    const route = (M.route ? String(r[M.route]??'').trim() : '') || '—';
+    const dir = (M.dir ? String(r[M.dir]??'').trim() : '') || '—';
+
+    let plannedMin = NaN;
+    if(M.plan){
+      plannedMin = parseDurationToMin(r[M.plan], M.durUnit);
+      if(!Number.isFinite(plannedMin) || plannedMin<=0) plannedMin = NaN;
+    }
+
+    const dayType = dayTypeFromISO(dateISO);
+    const win = windowFromHour(hour);
+
+    DATA.push({ cluster, makt, route, dir, dateISO, hour, win, dayType, durMin, plannedMin });
+  }
+
+  COUNTS.ok = DATA.length;
+  el.okCount.textContent = String(COUNTS.ok);
+  el.outCount.textContent = String(COUNTS.out);
+
+  if(DATA.length === 0){
+    showError('לא נמצאו שורות תקינות אחרי מיפוי/המרה. בדוק מיפוי, פורמט תאריך, ויחידות משך.');
+    return false;
+  }
+  return true;
+}
+
+/* ---------- Filters UI ---------- */
+function uniq(arr){ return Array.from(new Set(arr)).sort((a,b)=>String(a).localeCompare(String(b),'he')); }
+function fillFilterSelect(sel, values, allLabel='הכול'){
+  sel.innerHTML = '';
+  const optAll = document.createElement('option');
+  optAll.value = '';
+  optAll.textContent = allLabel;
+  sel.appendChild(optAll);
+  for(const v of values){
+    const o = document.createElement('option');
+    o.value = v;
+    o.textContent = v;
+    sel.appendChild(o);
+  }
+  sel.value = '';
+}
+function refreshFilterOptions(){
+  fillFilterSelect(el.fCluster, uniq(DATA.map(d=>d.cluster)));
+  fillFilterSelect(el.fMakt, uniq(DATA.map(d=>d.makt)));
+  fillFilterSelect(el.fRoute, uniq(DATA.map(d=>d.route)));
+  fillFilterSelect(el.fDir, uniq(DATA.map(d=>d.dir)));
+  fillFilterSelect(el.fDay, uniq(DATA.map(d=>d.dayType)), 'הכול');
+  fillFilterSelect(el.fWin, uniq(DATA.map(d=>d.win)), 'הכול');
+
+  // hours 0-23 present
+  const hours = uniq(DATA.map(d=>String(d.hour))).sort((a,b)=>Number(a)-Number(b));
+  fillFilterSelect(el.fHour, hours, 'הכול');
+
+  // default date range
+  const dates = uniq(DATA.map(d=>d.dateISO)).sort();
+  el.fFrom.value = dates[0] || '';
+  el.fTo.value = dates[dates.length-1] || '';
+}
+function renderExList(){
+  if(!EX_RANGES.length){ el.exList.textContent = 'אין החרגות.'; return; }
+  el.exList.innerHTML = EX_RANGES.map((x,idx)=>
+    `<div class="row" style="justify-content:space-between">
+      <span class="mono">${escapeHtml(x.fromISO)} → ${escapeHtml(x.toISO)}</span>
+      <button class="btn small red" data-exdel="${idx}">מחק</button>
+    </div>`
+  ).join('');
+  el.exList.querySelectorAll('button[data-exdel]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = Number(btn.getAttribute('data-exdel'));
+      EX_RANGES.splice(i,1);
+      renderExList();
+      renderAll(); // live update
+    });
+  });
+}
+
+/* ---------- Filtering ---------- */
+function isDateInRange(d, fromISO, toISO){
+  if(fromISO && d < fromISO) return false;
+  if(toISO && d > toISO) return false;
+  return true;
+}
+function isExcluded(dateISO){
+  for(const ex of EX_RANGES){
+    if(dateISO >= ex.fromISO && dateISO <= ex.toISO) return true;
+  }
+  return false;
+}
+function getFilteredData(){
+  const fc = el.fCluster.value;
+  const fm = el.fMakt.value;
+  const fr = el.fRoute.value;
+  const fd = el.fDir.value;
+  const fday = el.fDay.value;
+  const fwin = el.fWin.value;
+  const fhour = el.fHour.value;
+  const fromISO = el.fFrom.value;
+  const toISO = el.fTo.value;
+
+  return DATA.filter(x=>{
+    if(fc && x.cluster !== fc) return false;
+    if(fm && x.makt !== fm) return false;
+    if(fr && x.route !== fr) return false;
+    if(fd && x.dir !== fd) return false;
+    if(fday && x.dayType !== fday) return false;
+
+    if(!isDateInRange(x.dateISO, fromISO, toISO)) return false;
+    if(isExcluded(x.dateISO)) return false;
+
+    if(el.gran.value === 'window'){
+      if(fwin && x.win !== fwin) return false;
+    } else {
+      if(fhour && String(x.hour) !== String(fhour)) return false;
+    }
+    return true;
+  });
+}
+
+/* ---------- Policy / Rec calc ---------- */
+function isPeak(bucketLabel){
+  return bucketLabel === 'שיא בוקר' || bucketLabel === 'שיא ערב';
+}
+function choosePct({bucket, cv, n}){
+  if(el.policy.value === 'manual'){
+    return clamp(parseInt(el.pct.value||'85',10)||85,50,99);
+  }
+  let p = isPeak(bucket) ? 90 : 85;
+  if(cv >= 0.25) p += 2;
+  if(cv >= 0.35) p += 2;
+  if(n < (M?.minN||10)) p += 2;
+  return clamp(p, 80, 95);
+}
+function riskScore({cv, gap, n}){
+  // cv up to ~0.5 => 0..60
+  const a = clamp(cv*140, 0, 70);
+  const b = (Number.isFinite(gap) ? clamp(Math.abs(gap)*6, 0, 25) : 0);
+  const c = (n < (M?.minN||10)) ? clamp((M.minN - n)*3, 0, 20) : 0;
+  return Math.round(clamp(a+b+c, 0, 100));
+}
+
+/* ---------- Summaries ---------- */
+function groupKey(x){
+  const timeKey = (el.gran.value === 'window') ? x.win : String(x.hour);
+  return [x.cluster, x.makt, x.route, x.dir, timeKey].join('||');
+}
+function summarize(filtered){
+  const groups = new Map();
+  for(const x of filtered){
+    const k = groupKey(x);
+    if(!groups.has(k)){
+      groups.set(k, {
+        cluster:x.cluster, makt:x.makt, route:x.route, dir:x.dir,
+        bucket: (el.gran.value === 'window') ? x.win : String(x.hour),
+        dur: [], plan: []
+      });
+    }
+    const g = groups.get(k);
+    g.dur.push(x.durMin);
+    if(Number.isFinite(x.plannedMin)) g.plan.push(x.plannedMin);
+  }
+
+  const out=[];
+  let totalRemoved=0;
+
+  for(const g of groups.values()){
+    const rawN = g.dur.length;
+    const { used, removed } = filterOutliers(g.dur, el.outMode.value);
+    totalRemoved += removed;
+
+    const usedSorted = used.slice().sort((a,b)=>a-b);
+    const usedN = usedSorted.length;
+    if(usedN < (M?.minN||10)) continue;
+
+    const mu = mean(us
