@@ -149,17 +149,62 @@
       line-height:1.6
     }
     .smallNote{font-size:12px;color:var(--muted)}
+
+    /* =========================
+       LIGHT THEME OVERRIDES
+       ========================= */
+    :root{
+      --bg:#ffffff;
+      --card:#ffffff;
+      --card2:#ffffff;
+      --text:#111827;
+      --muted:#4b5563;
+      --line:rgba(17,24,39,.14);
+    }
+    body{
+      background:#ffffff !important;
+      color:var(--text) !important;
+    }
+    header,.card{
+      background:#ffffff !important;
+      box-shadow: 0 10px 24px rgba(17,24,39,.08) !important;
+    }
+    .pill,.badge{
+      background:#f9fafb !important;
+      border-color: rgba(17,24,39,.14) !important;
+      color: var(--muted) !important;
+    }
+    .pill b{color:var(--text)!important;}
+    .badge.good{background:#ecfdf5!important;border-color:#a7f3d0!important;color:#065f46!important;}
+    .badge.bad{background:#fef2f2!important;border-color:#fecaca!important;color:#991b1b!important;}
+    .badge.warn{background:#fffbeb!important;border-color:#fde68a!important;color:#92400e!important;}
+    .badge.purp{background:#f5f3ff!important;border-color:#ddd6fe!important;color:#5b21b6!important;}
+    input,select{
+      background:#ffffff !important;
+      color:#111827 !important;
+      border:1px solid rgba(17,24,39,.20) !important;
+    }
+    input[type="date"]{color-scheme: light;}
+    th{
+      background:#f3f4f6 !important;
+      color:#111827 !important;
+    }
+    tr:hover td{background:#f9fafb !important;}
+    .tableWrap{border-color: rgba(17,24,39,.14) !important;}
+    .drop{background:#ffffff !important;}
+    .drop.drag{background:#f5f3ff !important; border-color: rgba(124,58,237,.8) !important;}
+    canvas{background:#ffffff !important;}
   </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div class="title">
-      <h1>מערכת ניתוח זמני תקן — Offline‑First 🚌</h1>
-      <p>טוען CSV מקומית (Drag&Drop או בחירה), סינונים, ניקוי חריגים, אחוזונים דינמיים, Top‑10 בעייתיים/מצטיינים, וייצוא.</p>
+      <h1>מערכת ניתוח זמני תקן — Offline-First 🚌</h1>
+      <p>טוען CSV מקומית (Drag&Drop או בחירה), סינונים, ניקוי חריגים, אחוזונים דינמיים, Top-10 בעייתיים/מצטיינים, וייצוא.</p>
     </div>
     <div class="row">
-      <div class="pill"><span class="mono">v23</span> <b>ללא תלות ב‑CDN</b></div>
+      <div class="pill"><span class="mono">v23</span> <b>ללא תלות ב-CDN</b></div>
       <button id="btnHelp" class="btn primary">מדריך קצר</button>
     </div>
   </header>
@@ -173,7 +218,7 @@
           <button id="btnReset" class="btn red">איפוס</button>
         </div>
         <p>אפשר לגרור לכאן קבצי CSV (אחד או יותר). כל הקבצים יתאחדו.</p>
-        <p class="smallNote">טיפ: אל תפתח את הקובץ ב־Preview של Gmail/Drive. תוריד למחשב ותפתח ב‑Chrome/Edge.</p>
+        <p class="smallNote">טיפ: אל תפתח את הקובץ ב־Preview של Gmail/Drive. תוריד למחשב ותפתח ב-Chrome/Edge.</p>
         <input id="file" type="file" accept=".csv,text/csv" multiple style="display:none"/>
       </div>
 
@@ -388,7 +433,7 @@
 
     <div class="grid cols2">
       <div class="card">
-        <h2>6) Top‑10 “בעייתיים” (חוסר תקן) + Risk</h2>
+        <h2>6) Top-10 “בעייתיים” (חוסר תקן) + Risk</h2>
         <div class="tableWrap">
           <table>
             <thead>
@@ -405,7 +450,7 @@
       </div>
 
       <div class="card">
-        <h2>7) Top‑10 “מצטיינים” (עודף תקן) + Risk</h2>
+        <h2>7) Top-10 “מצטיינים” (עודף תקן) + Risk</h2>
         <div class="tableWrap">
           <table>
             <thead>
@@ -452,7 +497,7 @@
   </div>
 
   <footer class="hint" style="margin:14px 4px 6px">
-    קובץ יחיד. עובד גם בלי אינטרנט. כדי להפוך לדף אינטרנט: העלה ל‑GitHub Pages / Netlify / SharePoint כקובץ HTML סטטי.
+    קובץ יחיד. עובד גם בלי אינטרנט. כדי להפוך לדף אינטרנט: העלה ל-GitHub Pages / Netlify / SharePoint כקובץ HTML סטטי.
   </footer>
 </div>
 
@@ -470,7 +515,7 @@
       <li><b>Mean / Median</b>: ממוצע מול חציון. אם החציון נמוך מהממוצע — כנראה שיש חריגים שמושכים למעלה.</li>
       <li><b>STD</b>: סטיית תקן — כמה הזמנים “מתפזרים”. גבוה = הרבה שונות.</li>
       <li><b>CV</b>: סטיית תקן יחסית לממוצע. זה מדד מצוין להשוואה בין קווים ארוכים וקצרים. כלל אצבע: מעל ~0.25 = שונות גבוהה.</li>
-      <li><b>Planned</b>: זמן התכנון שיש לך בקובץ (אם יש). אנחנו מציגים אותו כ‑Median כדי להיות יציב.</li>
+      <li><b>Planned</b>: זמן התכנון שיש לך בקובץ (אם יש). אנחנו מציגים אותו כ-Median כדי להיות יציב.</li>
       <li><b>Gap</b>: Rec − Planned. <b>חיובי</b> = חסר תקן (תכנון קצר מדי). <b>שלילי</b> = עודף תקן.</li>
       <li><b>Risk</b>: ציון 0–100 שמדרג איפה הכי “כואב” להתערב. משקלל: שונות (CV), גודל פער מול תכנון, וכמה מעט נתונים יש.</li>
     </ul>
@@ -481,7 +526,7 @@
     <h3>FAQ קצר</h3>
     <p><b>1) למה יש לי “חוסר תקן” אבל CV נמוך?</b> כנראה שהקו עקבי, פשוט התכנון קצר מדי. קל לתקן — להוסיף דקות בתקופה הנכונה (שיא/שעה).</p>
     <p><b>2) למה יש CV גבוה אבל Gap קטן?</b> התכנון אולי בסדר “בממוצע”, אבל יש ימים/שעות קיצון. פה כדאי להשתמש בהחרגת תאריכים/טווחים ולבדוק אם זו תופעה קבועה או אירועים.</p>
-    <p><b>3) למה Top‑10 ריק?</b> כי אין עמודת תכנון בקבצים או שלא זוהתה. אפשר עדיין להמליץ תקן לפי אחוזונים, אבל “חוסר/עודף” צריך Planned.</p>
+    <p><b>3) למה Top-10 ריק?</b> כי אין עמודת תכנון בקבצים או שלא זוהתה. אפשר עדיין להמליץ תקן לפי אחוזונים, אבל “חוסר/עודף” צריך Planned.</p>
   </div>
 </div>
 
@@ -599,8 +644,8 @@ function setLoading(on, msg){
 function updateDepState(){
   // Offline-first: always OK. Still show hint for preview limitations.
   el.depState.innerHTML = `
-    <div><b>סטטוס:</b> קובץ Offline‑First. אין תלות ב‑CDN. אם “לא עובד” — לרוב זה בגלל פתיחה ב‑Preview שחוסם JavaScript.</div>
-    <div class="smallNote">פתרון: הורד למחשב ופתח ב‑Chrome/Edge (לא ב‑Gmail/Drive Preview).</div>
+    <div><b>סטטוס:</b> קובץ Offline-First. אין תלות ב-CDN. אם “לא עובד” — לרוב זה בגלל פתיחה ב-Preview שחוסם JavaScript.</div>
+    <div class="smallNote">פתרון: הורד למחשב ופתח ב-Chrome/Edge (לא ב-Gmail/Drive Preview).</div>
   `;
 }
 
@@ -712,1077 +757,4 @@ function bestHeader(headers, keys){
   }
   return '';
 }
-function fillSelect(sel, headers, preferred){
-  sel.innerHTML = '';
-  const opt0 = document.createElement('option');
-  opt0.value = '';
-  opt0.textContent = '— לא קיים —';
-  sel.appendChild(opt0);
-  for(const h of headers){
-    const o=document.createElement('option');
-    o.value=h; o.textContent=h;
-    sel.appendChild(o);
-  }
-  if(preferred){
-    sel.value = preferred || '';
-  }
-}
-function parseDateAny(v){
-  if(v===null || v===undefined) return null;
-  const s = String(v).trim();
-  if(!s) return null;
 
-  // ISO yyyy-mm-dd
-  let m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if(m){
-    const iso = `${m[1]}-${m[2]}-${m[3]}`;
-    return iso;
-  }
-  // dd/mm/yyyy or dd.mm.yyyy
-  m = s.match(/^(\d{1,2})[\/\.](\d{1,2})[\/\.](\d{2,4})/);
-  if(m){
-    const d = pad2(parseInt(m[1],10));
-    const mo = pad2(parseInt(m[2],10));
-    let y = parseInt(m[3],10);
-    if(y<100) y = 2000 + y;
-    return `${y}-${mo}-${d}`;
-  }
-  // yyyy/mm/dd
-  m = s.match(/^(\d{4})[\/\.](\d{1,2})[\/\.](\d{1,2})/);
-  if(m){
-    const y = m[1];
-    const mo = pad2(parseInt(m[2],10));
-    const d = pad2(parseInt(m[3],10));
-    return `${y}-${mo}-${d}`;
-  }
-  // last resort: Date.parse
-  const t = Date.parse(s);
-  if(!Number.isNaN(t)){
-    const d = new Date(t);
-    return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
-  }
-  return null;
-}
-function parseHourAny(v){
-  if(v===null || v===undefined) return null;
-  const s = String(v).trim();
-  if(!s) return null;
-  // if it's a number 0-23
-  if(/^\d{1,2}$/.test(s)){
-    const h = parseInt(s,10);
-    if(h>=0 && h<=23) return h;
-  }
-  // HH:MM[:SS]
-  const m = s.match(/(\d{1,2}):(\d{2})(?::(\d{2}))?/);
-  if(m){
-    const h = parseInt(m[1],10);
-    if(h>=0 && h<=23) return h;
-  }
-  // datetime "yyyy-mm-dd HH:MM"
-  const m2 = s.match(/\s(\d{1,2}):(\d{2})/);
-  if(m2){
-    const h = parseInt(m2[1],10);
-    if(h>=0 && h<=23) return h;
-  }
-  return null;
-}
-function parseDurationToMinutes(v, unitMode, autoHint){
-  if(v===null || v===undefined) return null;
-  const s0 = String(v).trim();
-  if(!s0) return null;
-
-  // normalize commas
-  const s = s0.replace(',', '.');
-
-  const toNum = ()=> {
-    const n = Number(s);
-    return Number.isFinite(n) ? n : null;
-  };
-
-  const parseHHMMSS = ()=>{
-    const parts = s0.split(':').map(x=>x.trim());
-    if(parts.length===3){
-      const hh=Number(parts[0]), mm=Number(parts[1]), ss=Number(parts[2]);
-      if([hh,mm,ss].every(Number.isFinite)) return hh*60 + mm + ss/60;
-    }
-    if(parts.length===2){
-      const hh=Number(parts[0]), mm=Number(parts[1]);
-      if([hh,mm].every(Number.isFinite)) return hh*60 + mm;
-    }
-    return null;
-  };
-
-  if(unitMode==='hhmmss' || unitMode==='hhmm') return parseHHMMSS();
-
-  // auto: detect HH:MM
-  if(unitMode==='auto' && s0.includes(':')){
-    const hh = parseHHMMSS();
-    if(hh!==null) return hh;
-  }
-
-  const n = toNum();
-  if(n===null) return null;
-
-  if(unitMode==='sec') return n/60.0;
-  if(unitMode==='min') return n;
-
-  // auto numeric: guess seconds if very large
-  if(unitMode==='auto'){
-    if(autoHint==='seconds') return n/60.0;
-    if(autoHint==='minutes') return n;
-    // heuristic
-    if(n>600) return n/60.0;  // >10 hours in minutes is unlikely; better treat as seconds
-    return n;
-  }
-
-  return n;
-}
-
-function timeWindow(h){
-  if(h===null) return '—';
-  if(h>=6 && h<9) return 'שיא בוקר (06–09)';
-  if(h>=15 && h<19) return 'שיא ערב (15–19)';
-  if(h>=9 && h<15) return 'שפל (09–15)';
-  return 'לילה/אחר';
-}
-function dayTypeFromISO(iso, wdVal){
-  // Prefer provided weekday 1..7 if exists (1=Sun ? depends). We'll map conservatively:
-  // If looks like 1..7 and Friday=6, Saturday=7 (common in Israel exports) -> use it.
-  const wd = (wdVal===null || wdVal===undefined || wdVal==='') ? null : Number(wdVal);
-  if(Number.isFinite(wd)){
-    if(wd===6) return 'שישי';
-    if(wd===7) return 'שבת';
-    return 'חול';
-  }
-  if(!iso) return 'חול';
-  const d = new Date(iso+'T00:00:00');
-  const g = d.getDay(); // 0=Sun
-  if(g===5) return 'שישי';
-  if(g===6) return 'שבת';
-  return 'חול';
-}
-
-/* Stats */
-function mean(arr){ return arr.reduce((a,b)=>a+b,0)/arr.length; }
-function median(arr){
-  const a = arr.slice().sort((x,y)=>x-y);
-  const n = a.length;
-  if(!n) return null;
-  const mid = Math.floor(n/2);
-  return (n%2)? a[mid] : (a[mid-1]+a[mid])/2;
-}
-function percentile(arr, p){
-  if(!arr.length) return null;
-  const a = arr.slice().sort((x,y)=>x-y);
-  const idx = (p/100)*(a.length-1);
-  const lo = Math.floor(idx), hi = Math.ceil(idx);
-  const w = idx-lo;
-  if(hi===lo) return a[lo];
-  return a[lo]*(1-w) + a[hi]*w;
-}
-function std(arr, m){
-  const mu = (m!==undefined) ? m : mean(arr);
-  const v = arr.reduce((s,x)=>s+(x-mu)*(x-mu),0)/arr.length;
-  return Math.sqrt(v);
-}
-function removeOutliersMAD(values){
-  // remove where |x-med| > 4.5 * MAD * 1.4826
-  const med = median(values);
-  const abs = values.map(v=>Math.abs(v-med));
-  const mad = median(abs);
-  if(mad===null || mad===0) return {kept:values.slice(), removed:0};
-  const scale = 1.4826 * mad;
-  const thr = 4.5 * scale;
-  const kept = values.filter(v=>Math.abs(v-med) <= thr);
-  return {kept, removed: values.length - kept.length};
-}
-function removeOutliersIQR(values){
-  const q1 = percentile(values,25);
-  const q3 = percentile(values,75);
-  if(q1===null || q3===null) return {kept:values.slice(), removed:0};
-  const iqr = q3-q1;
-  if(iqr===0) return {kept:values.slice(), removed:0};
-  const lo = q1 - 1.5*iqr;
-  const hi = q3 + 1.5*iqr;
-  const kept = values.filter(v=>v>=lo && v<=hi);
-  return {kept, removed: values.length-kept.length};
-}
-
-/* Risk score (0..100) */
-function riskScore(gapMinutes, cv, n){
-  const gapAbs = (gapMinutes===null || gapMinutes===undefined) ? null : Math.abs(gapMinutes);
-  const cvPart = Math.min(1, Math.max(0, (cv - 0.18) / (0.55 - 0.18)));      // 0..1
-  const gapPart = (gapAbs===null) ? 0.35 : Math.min(1, gapAbs / 6.0);        // 0..1
-  const nPart  = Math.min(1, Math.max(0, (12 - (n||0)) / 12));               // 0..1 (פחות דגימות = יותר סיכון)
-  const score = 100 * (0.55*cvPart + 0.35*gapPart + 0.10*nPart);
-  return Math.max(0, Math.min(100, Math.round(score)));
-}
-
-/* Policy engine */
-function choosePercentile({winLabel, cv, n, policyMode, manualP}){
-  if(policyMode==='manual') return manualP;
-
-  const isPeak = (winLabel.startsWith('שיא'));
-  let p = isPeak ? 90 : 85;
-
-  if(n<12) p += 3;
-  if(cv>=0.40) p += 5;
-  else if(cv>=0.25) p += 3;
-  else if(cv<=0.12) p -= 2;
-
-  p = Math.max(70, Math.min(97, p));
-  return p;
-}
-
-/* Drawing */
-function clearCanvas(c){
-  const ctx = c.getContext('2d');
-  ctx.clearRect(0,0,c.width,c.height);
-  // background grid
-  ctx.fillStyle = 'rgba(255,255,255,0.02)';
-  ctx.fillRect(0,0,c.width,c.height);
-  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-  ctx.lineWidth = 1;
-  for(let x=60; x<c.width; x+=120){
-    ctx.beginPath(); ctx.moveTo(x,14); ctx.lineTo(x,c.height-34); ctx.stroke();
-  }
-  for(let y=40; y<c.height-40; y+=50){
-    ctx.beginPath(); ctx.moveTo(50,y); ctx.lineTo(c.width-16,y); ctx.stroke();
-  }
-  return ctx;
-}
-
-function drawHistogram(values, rec){
-  const c = el.cvHist;
-  const ctx = clearCanvas(c);
-  if(!values.length) {
-    ctx.fillStyle='rgba(255,255,255,.75)';
-    ctx.font='14px var(--font)';
-    ctx.fillText('אין נתונים להצגה', 60, 60);
-    return;
-  }
-  const vmin = Math.min(...values);
-  const vmax = Math.max(...values);
-  const bins = 24;
-  const span = Math.max(0.001, (vmax - vmin));
-  const step = span / bins;
-
-  const counts = new Array(bins).fill(0);
-  for(const v of values){
-    let i = Math.floor((v - vmin) / step);
-    if(i===bins) i=bins-1;
-    if(i>=0 && i<bins) counts[i]++;
-  }
-  const maxC = Math.max(...counts);
-
-  const W = c.width, H=c.height;
-  const left=52, right=14, top=16, bottom=36;
-  const innerW = W-left-right;
-  const innerH = H-top-bottom;
-
-  // axes labels
-  ctx.fillStyle='rgba(255,255,255,.75)';
-  ctx.font='12px var(--font)';
-  ctx.fillText('דקות', W-60, H-12);
-  ctx.fillText('כמות', 10, 26);
-
-  // bars
-  const barW = innerW / bins;
-  for(let i=0;i<bins;i++){
-    const h = (maxC===0) ? 0 : (counts[i]/maxC)*innerH;
-    const x = left + i*barW + 2;
-    const y = top + (innerH - h);
-    ctx.fillStyle = 'rgba(124,58,237,0.55)';
-    ctx.fillRect(x, y, Math.max(1, barW-4), h);
-  }
-
-  // rec line
-  if(rec!==null && Number.isFinite(rec)){
-    const x = left + ((rec - vmin)/span) * innerW;
-    ctx.strokeStyle = 'rgba(34,197,94,0.95)';
-    ctx.lineWidth=3;
-    ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, top+innerH); ctx.stroke();
-    ctx.fillStyle='rgba(34,197,94,0.95)';
-    ctx.font='12px var(--font)';
-    ctx.fillText(`תקן ≈ ${Math.ceil(rec)} דק׳`, Math.min(W-180, x+8), top+14);
-  }
-
-  // x ticks
-  ctx.fillStyle='rgba(255,255,255,.55)';
-  ctx.font='11px var(--font)';
-  for(let t=0;t<=4;t++){
-    const vv = vmin + (t/4)*span;
-    const xx = left + (t/4)*innerW;
-    ctx.fillText(vv.toFixed(0), xx-6, H-18);
-  }
-}
-
-function drawTrend(rowsByHour){
-  const c = el.cvTrend;
-  const ctx = clearCanvas(c);
-
-  const W=c.width,H=c.height;
-  const left=52,right=14,top=16,bottom=36;
-  const innerW=W-left-right, innerH=H-top-bottom;
-
-  const xs = Array.from({length:24}, (_,i)=>i);
-  const meanY = xs.map(h=>rowsByHour[h]?.mean ?? null);
-  const recY  = xs.map(h=>rowsByHour[h]?.rec ?? null);
-
-  const all = meanY.concat(recY).filter(v=>v!==null && Number.isFinite(v));
-  if(!all.length){
-    ctx.fillStyle='rgba(255,255,255,.75)';
-    ctx.font='14px var(--font)';
-    ctx.fillText('אין נתוני שעות להצגה', 60, 60);
-    return;
-  }
-  const ymin = Math.min(...all), ymax = Math.max(...all);
-  const span = Math.max(0.001, ymax-ymin);
-
-  // axes labels
-  ctx.fillStyle='rgba(255,255,255,.75)'; ctx.font='12px var(--font)';
-  ctx.fillText('שעה', W-52, H-12);
-  ctx.fillText('דקות', 10, 26);
-
-  function mapX(h){ return left + (h/23)*innerW; }
-  function mapY(v){ return top + (1 - (v-ymin)/span)*innerH; }
-
-  // draw line function
-  function drawLine(arr, stroke, width){
-    ctx.strokeStyle=stroke; ctx.lineWidth=width; ctx.beginPath();
-    let started=false;
-    for(let i=0;i<24;i++){
-      const v=arr[i];
-      if(v===null || !Number.isFinite(v)){ started=false; continue; }
-      const x=mapX(i), y=mapY(v);
-      if(!started){ ctx.moveTo(x,y); started=true; }
-      else ctx.lineTo(x,y);
-    }
-    ctx.stroke();
-    // points
-    for(let i=0;i<24;i++){
-      const v=arr[i];
-      if(v===null || !Number.isFinite(v)) continue;
-      const x=mapX(i), y=mapY(v);
-      ctx.fillStyle=stroke;
-      ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
-    }
-  }
-
-  drawLine(meanY, 'rgba(160,185,240,0.9)', 2);
-  drawLine(recY,  'rgba(124,58,237,0.95)', 3);
-
-  // legend
-  ctx.fillStyle='rgba(160,185,240,0.9)'; ctx.fillRect(left+6, top+6, 10, 10);
-  ctx.fillStyle='rgba(255,255,255,.75)'; ctx.fillText('ממוצע', left+22, top+15);
-  ctx.fillStyle='rgba(124,58,237,0.95)'; ctx.fillRect(left+70, top+6, 10, 10);
-  ctx.fillStyle='rgba(255,255,255,.75)'; ctx.fillText('תקן', left+86, top+15);
-
-  // x ticks
-  ctx.fillStyle='rgba(255,255,255,.55)'; ctx.font='11px var(--font)';
-  for(let h=0;h<24;h+=3){
-    ctx.fillText(String(h), mapX(h)-3, H-18);
-  }
-}
-
-/* ---------- Build mapping UI ---------- */
-function rebuildMappingUI(){
-  const headers = HEADERS.slice().sort((a,b)=>a.localeCompare(b,'he'));
-  fillSelect(el.mDate, headers, bestHeader(headers,SYN.date));
-  fillSelect(el.mTime, headers, bestHeader(headers,SYN.time));
-  fillSelect(el.mDur,  headers, bestHeader(headers,SYN.dur));
-  fillSelect(el.mCluster, headers, bestHeader(headers,SYN.cluster));
-  fillSelect(el.mMakt, headers, bestHeader(headers,SYN.makt));
-  fillSelect(el.mRoute, headers, bestHeader(headers,SYN.route));
-  fillSelect(el.mDir, headers, bestHeader(headers,SYN.dir));
-  fillSelect(el.mPlan, headers, bestHeader(headers,SYN.plan));
-  fillSelect(el.mWD, headers, bestHeader(headers,SYN.wd));
-}
-
-/* ---------- Normalize ---------- */
-function applyMapping(){
-  hideError(); hideWarn();
-  DROPPED = {missing:0, invalid:0, parse:0, dateRange:0, excluded:0, outlier:0};
-  DATA = [];
-  LAST_TABLE = [];
-
-  M = {
-    date: el.mDate.value,
-    time: el.mTime.value,
-    dur:  el.mDur.value,
-    cluster: el.mCluster.value,
-    makt: el.mMakt.value,
-    route: el.mRoute.value,
-    dir: el.mDir.value,
-    plan: el.mPlan.value,
-    wd: el.mWD.value,
-    unit: el.durUnit.value,
-    gran: el.gran.value,
-    outMode: el.outMode.value,
-    minN: Math.max(3, parseInt(el.minN.value,10) || 10)
-  };
-
-  if(!M.date || !M.time || !M.dur){
-    showError("חסר מיפוי חובה: תאריך + שעה + משך בפועל.");
-    return false;
-  }
-
-  // unit hint (auto)
-  let autoHint = null;
-  if(M.unit==='auto'){
-    const sample = ALL_ROWS.slice(0, 200).map(r=>r?.[M.dur]).filter(v=>v!==undefined && v!==null && String(v).trim()!=='');
-    const nums = sample.map(v=>{
-      const s=String(v).trim();
-      if(s.includes(':')) return null;
-      const n = Number(String(v).replace(',','.'));
-      return Number.isFinite(n)?n:null;
-    }).filter(n=>n!==null);
-    if(nums.length){
-      const med = percentile(nums,50);
-      // if median > 600 (10h minutes) probably seconds; if between 120..600 ambiguous but still often seconds
-      if(med>600) autoHint='seconds';
-      else if(med>200) autoHint='seconds';
-      else autoHint='minutes';
-    }
-  }
-
-  for(const r of ALL_ROWS){
-    try{
-      const dateISO = parseDateAny(r[M.date]);
-      const hour = parseHourAny(r[M.time]);
-      const durMin = parseDurationToMinutes(r[M.dur], M.unit, autoHint);
-
-      if(!dateISO || hour===null || durMin===null){
-        DROPPED.missing++; continue;
-      }
-      if(!(durMin>0) || durMin<1 || durMin>360){
-        DROPPED.invalid++; continue;
-      }
-
-      const cluster = (M.cluster && r[M.cluster]!==undefined && r[M.cluster]!==null && String(r[M.cluster]).trim()!=='') ? String(r[M.cluster]).trim() : 'כללי';
-      const makt = (M.makt && r[M.makt]!==undefined && r[M.makt]!==null && String(r[M.makt]).trim()!=='') ? String(r[M.makt]).trim() : '—';
-      const route = (M.route && r[M.route]!==undefined && r[M.route]!==null && String(r[M.route]).trim()!=='') ? String(r[M.route]).trim() : '—';
-      const dir = (M.dir && r[M.dir]!==undefined && r[M.dir]!==null && String(r[M.dir]).trim()!=='') ? String(r[M.dir]).trim() : '—';
-      const wdRaw = (M.wd ? r[M.wd] : null);
-      const dayType = dayTypeFromISO(dateISO, wdRaw);
-      const winLabel = timeWindow(hour);
-
-      let plannedMin = null;
-      if(M.plan){
-        plannedMin = parseDurationToMinutes(r[M.plan], M.unit, autoHint);
-        if(plannedMin!==null && (!Number.isFinite(plannedMin) || plannedMin<=0)) plannedMin=null;
-      }
-
-      DATA.push({cluster, makt, route, dir, dateISO, hour, dayType, winLabel, durMin, plannedMin});
-    }catch(e){
-      DROPPED.parse++;
-    }
-  }
-
-  el.okCount.textContent = String(DATA.length);
-  el.outCount.textContent = "0";
-
-  if(DATA.length===0){
-    showError("לא נוצרו רשומות תקינות אחרי מיפוי. בדוק יחידות (שניות/דקות) או עמודות.");
-    return false;
-  }
-
-  // populate filters from DATA
-  populateFilters();
-  el.main.style.display = 'grid';
-  updateAll();
-
-  return true;
-}
-
-/* ---------- Filters ---------- */
-function uniq(arr){ return Array.from(new Set(arr)); }
-function addOpt(sel, val, txt){
-  const o=document.createElement('option');
-  o.value=val; o.textContent=txt;
-  sel.appendChild(o);
-}
-function populateFilters(){
-  // Cluster
-  const clusters = uniq(DATA.map(d=>d.cluster)).sort((a,b)=>a.localeCompare(b,'he'));
-  el.fCluster.innerHTML='';
-  addOpt(el.fCluster,'all','כל האשכולות');
-  clusters.forEach(c=>addOpt(el.fCluster,c,c));
-
-  // Makt
-  rebuildMaktsAndRoutes();
-
-  // Direction
-  const dirs = uniq(DATA.map(d=>d.dir)).sort();
-  el.fDir.innerHTML='';
-  addOpt(el.fDir,'all','הכל');
-  dirs.forEach(x=>addOpt(el.fDir,x,x));
-
-  // Day type
-  el.fDay.innerHTML='';
-  addOpt(el.fDay,'all','הכל');
-  ['חול','שישי','שבת'].forEach(x=>addOpt(el.fDay,x,x));
-
-  // Window
-  el.fWin.innerHTML='';
-  addOpt(el.fWin,'all','הכל');
-  uniq(DATA.map(d=>d.winLabel)).forEach(x=>addOpt(el.fWin,x,x));
-
-  // Hour
-  el.fHour.innerHTML='';
-  addOpt(el.fHour,'all','כל השעות');
-  for(let h=0;h<24;h++) addOpt(el.fHour,String(h), `${pad2(h)}:00–${pad2(h)}:59`);
-
-  // date defaults
-  const dates = uniq(DATA.map(d=>d.dateISO)).sort();
-  el.fFrom.value = dates[0] || '';
-  el.fTo.value = dates[dates.length-1] || '';
-}
-
-function rebuildMaktsAndRoutes(){
-  const c = el.fCluster.value;
-  const scoped = (c==='all') ? DATA : DATA.filter(d=>d.cluster===c);
-
-  const makts = uniq(scoped.map(d=>d.makt)).sort((a,b)=>a.localeCompare(b,'he'));
-  const routes = uniq(scoped.map(d=>d.route)).sort((a,b)=>a.localeCompare(b,'he'));
-
-  const keepM = el.fMakt.value;
-  const keepR = el.fRoute.value;
-
-  el.fMakt.innerHTML=''; addOpt(el.fMakt,'all','הכל');
-  makts.forEach(x=>addOpt(el.fMakt,x,x));
-  el.fRoute.innerHTML=''; addOpt(el.fRoute,'all','הכל');
-  routes.forEach(x=>addOpt(el.fRoute,x,x));
-
-  if(makts.includes(keepM)) el.fMakt.value = keepM; else el.fMakt.value='all';
-  if(routes.includes(keepR)) el.fRoute.value = keepR; else el.fRoute.value='all';
-}
-
-function inRange(dateISO, fromISO, toISO){
-  if(!fromISO && !toISO) return true;
-  if(fromISO && dateISO < fromISO) return false;
-  if(toISO && dateISO > toISO) return false;
-  return true;
-}
-function isExcluded(dateISO){
-  for(const r of EX_RANGES){
-    if(dateISO>=r.fromISO && dateISO<=r.toISO) return true;
-  }
-  return false;
-}
-
-/* ---------- Compute & Render ---------- */
-function updateAll(){
-  hideError(); hideWarn();
-
-  const fc = el.fCluster.value;
-  const fm = el.fMakt.value;
-  const fr = el.fRoute.value;
-  const fd = el.fDir.value;
-  const fday = el.fDay.value;
-  const fwin = el.fWin.value;
-  const fh = el.fHour.value;
-
-  const from = el.fFrom.value || '';
-  const to = el.fTo.value || '';
-
-  let rows = DATA.filter(d=>{
-    if(fc!=='all' && d.cluster!==fc) return false;
-    if(fm!=='all' && d.makt!==fm) return false;
-    if(fr!=='all' && d.route!==fr) return false;
-    if(fd!=='all' && d.dir!==fd) return false;
-    if(fday!=='all' && d.dayType!==fday) return false;
-    if(fwin!=='all' && d.winLabel!==fwin) return false;
-    if(fh!=='all' && d.hour!==Number(fh)) return false;
-
-    if(!inRange(d.dateISO, from, to)) return false;
-    if(isExcluded(d.dateISO)) return false;
-    return true;
-  });
-
-  // KPI for selected slice
-  const durs = rows.map(r=>r.durMin);
-  const n = durs.length;
-
-  if(n<1){
-    el.kN.textContent='0';
-    el.kMean.textContent='—';
-    el.kRec.textContent='—';
-    el.kPct.textContent='—';
-    el.kCV.textContent='—';
-    drawHistogram([], null);
-    drawTrend({});
-    el.tbl.innerHTML = `<tr><td colspan="21" class="muted">אין נתונים בהתאם לסינון.</td></tr>`;
-    el.topWorst.innerHTML = `<tr><td colspan="12" class="muted">אין נתונים.</td></tr>`;
-    el.topBest.innerHTML = `<tr><td colspan="12" class="muted">אין נתונים.</td></tr>`;
-    el.ops.innerHTML = '';
-    return;
-  }
-
-  const mu = mean(durs);
-  const sd = std(durs, mu);
-  const cv = (mu>0) ? sd/mu : 0;
-
-  // choose percentile for KPI (based on window label if a single window; else treat as 'mixed' and use dynamic base 88)
-  const policyMode = el.policy.value;
-  const manualP = parseInt(el.pct.value,10);
-  const winLabel = (el.fWin.value!=='all') ? el.fWin.value : 'mixed';
-  const pChosen = (winLabel==='mixed' && policyMode==='dynamic') ? 88 : choosePercentile({winLabel, cv, n, policyMode, manualP});
-  const rec = percentile(durs, pChosen);
-
-  el.kN.textContent = String(n);
-  el.kMean.textContent = mu.toFixed(1);
-  el.kRec.textContent = String(Math.ceil(rec));
-  el.kPct.textContent = `P${pChosen}`;
-  el.kCV.textContent = cv.toFixed(2);
-
-  drawHistogram(durs, rec);
-
-  // Build per-hour stats for trend (based on selected slice)
-  const byHour = {};
-  for(let h=0;h<24;h++){
-    const hd = rows.filter(r=>r.hour===h).map(r=>r.durMin);
-    if(hd.length){
-      const m=mean(hd), s=std(hd,m), c=(m>0)?(s/m):0;
-      const w = timeWindow(h);
-      const p = choosePercentile({winLabel:w, cv:c, n:hd.length, policyMode, manualP});
-      const r = percentile(hd, p);
-      byHour[h] = {mean:m, rec:r};
-    }
-  }
-  drawTrend(byHour);
-
-  // Full table (grouped)
-  computeTableAndTop(rows);
-  renderOps();
-}
-
-function computeTableAndTop(rows){
-  const gran = M?.gran || el.gran.value;
-  const policyMode = el.policy.value;
-  const manualP = parseInt(el.pct.value,10);
-
-  // group key
-  const groups = new Map();
-
-  for(const r of rows){
-    const label = (gran==='hour') ? `${pad2(r.hour)}:00` : r.winLabel;
-    const key = `${r.cluster}||${r.makt}||${r.route}||${r.dir}||${label}`;
-    if(!groups.has(key)){
-      groups.set(key, {cluster:r.cluster, makt:r.makt, route:r.route, dir:r.dir, label, durs:[], plans:[]});
-    }
-    const g = groups.get(key);
-    g.durs.push(r.durMin);
-    if(r.plannedMin!==null && Number.isFinite(r.plannedMin)) g.plans.push(r.plannedMin);
-  }
-
-  const minN = Math.max(3, parseInt(el.minN.value,10) || 10);
-  const outMode = el.outMode.value;
-
-  const outRows = [];
-  let outRemoved = 0;
-
-  for(const g of groups.values()){
-    const rawN = g.durs.length;
-    let durs = g.durs.slice();
-
-    // outlier cleaning per group
-    let removed = 0;
-    if(outMode==='mad'){
-      const res = removeOutliersMAD(durs);
-      durs = res.kept;
-      removed = res.removed;
-    } else if(outMode==='iqr'){
-      const res = removeOutliersIQR(durs);
-      durs = res.kept;
-      removed = res.removed;
-    }
-    outRemoved += removed;
-
-    if(durs.length < minN) continue;
-
-    const mu = mean(durs);
-    const med = median(durs);
-    const sd = std(durs, mu);
-    const cv = (mu>0) ? sd/mu : 0;
-
-    const p85 = percentile(durs,85);
-    const p90 = percentile(durs,90);
-    const p95 = percentile(durs,95);
-
-    // planned
-    const plannedMed = (g.plans.length>=3) ? median(g.plans) : (g.plans.length? median(g.plans): null);
-
-    // choose percentile dynamically
-    const winLabel = (gran==='hour') ? timeWindow(parseInt(g.label,10)) : g.label;
-    const pChosen = choosePercentile({winLabel, cv, n:durs.length, policyMode, manualP});
-    const rec = percentile(durs, pChosen);
-
-    const gap = (plannedMed===null) ? null : (rec - plannedMed);
-    const risk = riskScore(gap, cv, durs.length);
-
-    let status = '✅';
-    if(cv>=0.25) status='⚠️ שונות';
-    if(cv>=0.45) status='🚨 שונות קיצונית';
-
-    outRows.push({
-      cluster:g.cluster, makt:g.makt, route:g.route, dir:g.dir, label:g.label,
-      n_raw: rawN, n_used: durs.length, removed,
-      mean:mu, median:med, std:sd, cv,
-      p85, p90, p95,
-      planned: plannedMed,
-      gap,
-      rec,
-      pct: `P${pChosen}`,
-      risk,
-      status
-    });
-  }
-
-  el.outCount.textContent = String(outRemoved);
-
-  // sort table: by risk desc then shortage desc
-  outRows.sort((a,b)=>{
-    const ra=b.risk - a.risk;
-    if(ra!==0) return ra;
-    const ga = Math.abs((b.gap??0)) - Math.abs((a.gap??0));
-    if(ga!==0) return ga;
-    return String(a.makt).localeCompare(String(b.makt),'he');
-  });
-
-  LAST_TABLE = outRows.slice();
-
-  // render main table
-  if(!outRows.length){
-    el.tbl.innerHTML = `<tr><td colspan="21" class="muted">אין קבוצות שעברו סף מינימום N אחרי ניקוי. הורד Min‑N או הרחב פילטרים.</td></tr>`;
-  } else {
-    el.tbl.innerHTML = outRows.map(r=>{
-      const gapTxt = (r.gap===null) ? '—' : (r.gap>0 ? ('+'+r.gap.toFixed(1)) : r.gap.toFixed(1));
-      const gapCls = (r.gap===null) ? '' : (Math.abs(r.gap)>=3 ? (r.gap>0?'badge bad':'badge good') : 'badge');
-      const riskCls = r.risk>=70 ? 'badge bad' : (r.risk>=40 ? 'badge warn' : 'badge good');
-      const recCell = `
-        <div class="row" style="gap:8px;justify-content:flex-start">
-          <span class="mono" style="font-weight:900;color:#e8dbff">${Math.ceil(r.rec)}</span>
-          <span class="badge purp mono">${escapeHtml(r.pct)}</span>
-        </div>`;
-      return `<tr>
-        <td>${escapeHtml(r.cluster)}</td>
-        <td class="mono" style="font-weight:900">${escapeHtml(r.makt)}</td>
-        <td class="mono">${escapeHtml(r.route)}</td>
-        <td class="mono">${escapeHtml(r.dir)}</td>
-        <td>${escapeHtml(r.label)}</td>
-        <td class="mono">${r.n_raw}</td>
-        <td class="mono">${r.n_used}</td>
-        <td class="mono">${r.removed}</td>
-        <td class="mono">${r.mean.toFixed(1)}</td>
-        <td class="mono">${r.median.toFixed(1)}</td>
-        <td class="mono">${r.std.toFixed(1)}</td>
-        <td class="mono">${r.cv.toFixed(2)}</td>
-        <td class="mono">${r.p85.toFixed(1)}</td>
-        <td class="mono">${r.p90.toFixed(1)}</td>
-        <td class="mono">${r.p95.toFixed(1)}</td>
-        <td class="mono">${(r.planned===null)?'—':r.planned.toFixed(1)}</td>
-        <td><span class="${gapCls} mono">${gapTxt}</span></td>
-        <td>${recCell}</td>
-        <td class="mono">${escapeHtml(r.pct)}</td>
-        <td><span class="${riskCls} mono">${r.risk}</span></td>
-        <td>${escapeHtml(r.status)}</td>
-      </tr>`;
-    }).join('');
-  }
-
-  // top10 worst/best by shortage/excess (requires planned)
-  const withPlan = outRows.filter(r=>r.planned!==null && Number.isFinite(r.planned));
-  const worst = withPlan.filter(r=>r.gap!==null && r.gap>0.01).sort((a,b)=>(b.gap-a.gap) || (b.risk-a.risk)).slice(0,10);
-  const best  = withPlan.filter(r=>r.gap!==null && r.gap<-0.01).sort((a,b)=>(a.gap-b.gap) || (b.risk-a.risk)).slice(0,10);
-
-  function rowTop(r, mode){
-    const gapTxt = (r.gap===null) ? '—' : (r.gap>0 ? ('+'+r.gap.toFixed(1)) : r.gap.toFixed(1));
-    const riskCls = r.risk>=70 ? 'badge bad' : (r.risk>=40 ? 'badge warn' : 'badge good');
-    const cvTxt = r.cv.toFixed(2);
-    const recCell = `<span class="mono" style="font-weight:900;color:#e8dbff">${Math.ceil(r.rec)}</span> <span class="badge purp mono">${escapeHtml(r.pct)}</span>`;
-    const tail = (mode==='worst') ? (r.gap.toFixed(1)) : (Math.abs(r.gap).toFixed(1));
-    const tailTxt = (mode==='worst') ? (`+${tail}`) : (`${tail}`);
-    return `<tr>
-      <td>${escapeHtml(r.cluster)}</td>
-      <td class="mono" style="font-weight:900">${escapeHtml(r.makt)}</td>
-      <td class="mono">${escapeHtml(r.route)}</td>
-      <td class="mono">${escapeHtml(r.dir)}</td>
-      <td>${escapeHtml(r.label)}</td>
-      <td class="mono">${r.n_used}</td>
-      <td class="mono">${r.planned.toFixed(1)}</td>
-      <td class="mono">${cvTxt}</td>
-      <td>${recCell}</td>
-      <td class="mono">${gapTxt}</td>
-      <td><span class="${riskCls} mono">${r.risk}</span></td>
-      <td class="mono" style="font-weight:900;color:${mode==='worst' ? '#ffd0d0' : '#bff7e7'}">${tailTxt}</td>
-    </tr>`;
-  }
-
-  if(!withPlan.length){
-    el.topWorst.innerHTML = `<tr><td colspan="12" class="muted">אין Planned מזוהה בקבצים — Top‑10 חוסר/עודף דורש עמודת תכנון.</td></tr>`;
-    el.topBest.innerHTML = `<tr><td colspan="12" class="muted">אין Planned מזוהה בקבצים — Top‑10 חוסר/עודף דורש עמודת תכנון.</td></tr>`;
-  } else {
-    el.topWorst.innerHTML = worst.length ? worst.map(r=>rowTop(r,'worst')).join('') : `<tr><td colspan="12" class="muted">אין חוסר תקן במדגם (Gap חיובי).</td></tr>`;
-    el.topBest.innerHTML  = best.length  ? best.map(r=>rowTop(r,'best')).join('')  : `<tr><td colspan="12" class="muted">אין עודף תקן במדגם (Gap שלילי).</td></tr>`;
-  }
-}
-
-/* ---------- Ops recommendations ---------- */
-function renderOps(){
-  el.ops.innerHTML = '';
-  if(!LAST_TABLE.length) return;
-
-  // pick top 6 by risk
-  const top = LAST_TABLE.slice().sort((a,b)=>b.risk-a.risk).slice(0,6);
-
-  const items = [];
-  const hasPlan = top.some(r=>r.planned!==null);
-
-  for(const r of top){
-    const isPeak = r.label.startsWith('שיא') || (r.label.includes(':') && timeWindow(parseInt(r.label,10)).startsWith('שיא'));
-    const gap = r.gap;
-    if(gap!==null && gap>1){
-      items.push(`הגדל תקן בקבוצה: אשכול <b>${escapeHtml(r.cluster)}</b>, מק״ט <b>${escapeHtml(r.makt)}</b>, קו <b>${escapeHtml(r.route)}</b>, כיוון <b>${escapeHtml(r.dir)}</b>, ${escapeHtml(r.label)} — <b>חוסר</b> ${gap.toFixed(1)} דק׳ (Risk ${r.risk}).`);
-    } else if(gap!==null && gap<-1){
-      items.push(`בדוק אפשרות לצמצום תקן בזהירות: אשכול <b>${escapeHtml(r.cluster)}</b>, מק״ט <b>${escapeHtml(r.makt)}</b>, קו <b>${escapeHtml(r.route)}</b>, ${escapeHtml(r.label)} — <b>עודף</b> ${Math.abs(gap).toFixed(1)} דק׳ (Risk ${r.risk}).`);
-    } else {
-      items.push(`Risk גבוה בגלל שונות/CV: אשכול <b>${escapeHtml(r.cluster)}</b>, מק״ט <b>${escapeHtml(r.makt)}</b>, קו <b>${escapeHtml(r.route)}</b>, ${escapeHtml(r.label)} — CV ${r.cv.toFixed(2)}. שקול טיפול תפעולי (פיקוח/עומס/תשתית) ולא רק דקות.`);
-    }
-
-    if(isPeak){
-      items.push(`בשיא: ודא זמן התאוששות/Recovery נפרד כדי לא “לאכול” אמינות בין נסיעות רצופות בקבוצה ${escapeHtml(r.label)}.`);
-    }
-  }
-
-  const uniqItems = Array.from(new Set(items)).slice(0,10);
-  for(const it of uniqItems){
-    const li=document.createElement('li');
-    li.innerHTML = it;
-    el.ops.appendChild(li);
-  }
-
-  if(!hasPlan){
-    const li=document.createElement('li');
-    li.innerHTML = `אין עמודת <b>Planned</b> מזוהה — Top‑10 חוסר/עודף מתבסס על תכנון. עדיין אפשר לעבוד לפי אחוזונים (Rec + Pct).`;
-    el.ops.appendChild(li);
-  }
-}
-
-/* ---------- Exclusion ranges ---------- */
-function renderExList(){
-  if(!EX_RANGES.length){
-    el.exList.innerHTML = '<span class="muted">אין החרגות.</span>';
-    return;
-  }
-  el.exList.innerHTML = EX_RANGES.map((r,i)=>{
-    return `<span class="badge mono">❌ ${r.fromISO} → ${r.toISO} <button class="btn small" data-ex="${i}" style="margin-right:8px">הסר</button></span>`;
-  }).join(' ');
-  // bind remove buttons
-  el.exList.querySelectorAll('button[data-ex]').forEach(b=>{
-    b.addEventListener('click', ()=>{
-      const idx = parseInt(b.getAttribute('data-ex'),10);
-      EX_RANGES.splice(idx,1);
-      renderExList();
-      updateAll();
-    });
-  });
-}
-
-function addExRange(){
-  const a = el.exFrom.value, b = el.exTo.value;
-  if(!a || !b){ showWarn("בחר תאריך התחלה וסיום להחרגה."); return; }
-  const fromISO = (a<=b) ? a : b;
-  const toISO = (a<=b) ? b : a;
-  EX_RANGES.push({fromISO, toISO});
-  // merge overlaps
-  EX_RANGES.sort((x,y)=>x.fromISO.localeCompare(y.fromISO));
-  const merged=[];
-  for(const r of EX_RANGES){
-    if(!merged.length) merged.push({...r});
-    else{
-      const last = merged[merged.length-1];
-      if(r.fromISO <= last.toISO){
-        last.toISO = (r.toISO>last.toISO) ? r.toISO : last.toISO;
-      }else merged.push({...r});
-    }
-  }
-  EX_RANGES = merged;
-  renderExList();
-  updateAll();
-}
-
-/* ---------- Export ---------- */
-function csvEscape(v){
-  const s = (v===null || v===undefined) ? '' : String(v);
-  return /[",\n\r]/.test(s) ? ('"'+s.replace(/"/g,'""')+'"') : s;
-}
-function toCSV(rows){
-  if(!rows.length) return '';
-  const headers = Object.keys(rows[0]);
-  const lines=[];
-  lines.push(headers.map(csvEscape).join(','));
-  for(const r of rows){
-    lines.push(headers.map(h=>csvEscape(r[h])).join(','));
-  }
-  return lines.join('\r\n');
-}
-function downloadText(filename, text, mime){
-  const blob = new Blob([text], {type: mime || 'text/plain;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url; a.download=filename;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url), 250);
-}
-function exportCSV(){
-  if(!LAST_TABLE.length){ showWarn("אין תוצאות לייצוא (הטבלה ריקה)."); return; }
-  const rows = LAST_TABLE.map(r=>({
-    cluster:r.cluster, makt:r.makt, route:r.route, direction:r.dir, label:r.label,
-    n_raw:r.n_raw, n_used:r.n_used, removed:r.removed,
-    mean_minutes:r.mean.toFixed(3), median_minutes:r.median.toFixed(3), std_minutes:r.std.toFixed(3), cv:r.cv.toFixed(4),
-    p85:r.p85.toFixed(3), p90:r.p90.toFixed(3), p95:r.p95.toFixed(3),
-    planned_median:(r.planned===null?'':r.planned.toFixed(3)),
-    gap_minutes:(r.gap===null?'':r.gap.toFixed(3)),
-    rec_minutes:r.rec.toFixed(3),
-    percentile:r.pct,
-    risk:r.risk,
-    status:r.status
-  }));
-  downloadText('recommended_standards.csv', toCSV(rows), 'text/csv;charset=utf-8');
-}
-function exportJSON(){
-  if(!LAST_TABLE.length){ showWarn("אין תוצאות לייצוא."); return; }
-  downloadText('recommended_standards.json', JSON.stringify(LAST_TABLE, null, 2), 'application/json;charset=utf-8');
-}
-function toYAML(rows){
-  // Simple YAML (list of objects)
-  const esc = (s)=> String(s??'').replace(/"/g,'\\"');
-  let out = 'recommended_standards:\n';
-  for(const r of rows){
-    out += `  - cluster: "${esc(r.cluster)}"\n`;
-    out += `    makt: "${esc(r.makt)}"\n`;
-    out += `    route: "${esc(r.route)}"\n`;
-    out += `    direction: "${esc(r.dir)}"\n`;
-    out += `    label: "${esc(r.label)}"\n`;
-    out += `    rec_minutes: ${Number(r.rec.toFixed(3))}\n`;
-    out += `    percentile: "${esc(r.pct)}"\n`;
-    out += `    n_used: ${r.n_used}\n`;
-    out += `    cv: ${Number(r.cv.toFixed(4))}\n`;
-    out += `    planned_median: ${r.planned===null ? 'null' : Number(r.planned.toFixed(3))}\n`;
-    out += `    gap_minutes: ${r.gap===null ? 'null' : Number(r.gap.toFixed(3))}\n`;
-    out += `    risk: ${r.risk}\n`;
-  }
-  return out;
-}
-function exportYAML(){
-  if(!LAST_TABLE.length){ showWarn("אין תוצאות לייצוא."); return; }
-  downloadText('recommended_standards.yaml', toYAML(LAST_TABLE), 'text/yaml;charset=utf-8');
-}
-
-/* ---------- Events ---------- */
-el.btnPick.addEventListener('click', ()=> el.file.click());
-el.file.addEventListener('change', async (e)=>{
-  const files = e.target.files;
-  if(!files || !files.length) return;
-
-  setLoading(true, 'קורא קבצים…');
-  await parseFiles(files);
-  setLoading(false, '');
-
-  if(!ALL_ROWS.length){
-    showError('לא הצלחתי לקרוא קבצים. בדוק שזה CSV תקין.');
-    return;
-  }
-  rebuildMappingUI();
-  showWarn('בחר/אמת מיפוי עמודות ואז לחץ “יישם מיפוי + חשב”.');
-});
-el.btnReset.addEventListener('click', ()=>{
-  FILES=[]; ALL_ROWS=[]; HEADERS=[];
-  DATA=[]; LAST_TABLE=[];
-  EX_RANGES=[];
-  el.filesCount.textContent='0';
-  el.filesList.innerHTML='';
-  el.rawCount.textContent='0';
-  el.okCount.textContent='0';
-  el.outCount.textContent='0';
-  el.main.style.display='none';
-  el.tbl.innerHTML='';
-  el.topWorst.innerHTML='';
-  el.topBest.innerHTML='';
-  el.ops.innerHTML='';
-  renderExList();
-  hideError(); hideWarn();
-});
-el.drop.addEventListener('dragover', (e)=>{ e.preventDefault(); el.drop.classList.add('drag'); });
-el.drop.addEventListener('dragleave', ()=> el.drop.classList.remove('drag'));
-el.drop.addEventListener('drop', async (e)=>{
-  e.preventDefault(); el.drop.classList.remove('drag');
-  const files = e.dataTransfer.files;
-  if(!files || !files.length) return;
-
-  setLoading(true,'קורא קבצים…');
-  await parseFiles(files);
-  setLoading(false,'');
-
-  if(!ALL_ROWS.length){
-    showError('לא הצלחתי לקרוא קבצים. בדוק שזה CSV תקין.');
-    return;
-  }
-  rebuildMappingUI();
-  showWarn('בחר/אמת מיפוי עמודות ואז לחץ “יישם מיפוי + חשב”.');
-});
-
-el.btnApplyMap.addEventListener('click', ()=>{
-  const ok = applyMapping();
-  if(ok){
-    hideWarn();
-    renderExList();
-    showWarn('טיפ: עכשיו אפשר לסנן תאריכים ולהחריג טווחים (הפגנות/חורף).');
-  }
-});
-
-[el.fCluster, el.fMakt, el.fRoute, el.fDir, el.fDay, el.fWin, el.fHour, el.fFrom, el.fTo].forEach(x=>{
-  x.addEventListener('change', ()=>{
-    if(x===el.fCluster){
-      // reset dependent filters to avoid "stuck route"
-      el.fMakt.value='all';
-      el.fRoute.value='all';
-      rebuildMaktsAndRoutes();
-    }
-    updateAll();
-  });
-});
-
-el.btnAddEx.addEventListener('click', addExRange);
-
-el.policy.addEventListener('change', ()=>{
-  el.manualBox.style.display = (el.policy.value==='manual') ? 'block' : 'none';
-  updateAll();
-});
-el.pct.addEventListener('input', ()=>{
-  el.pctTxt.textContent = `P${el.pct.value}`;
-  updateAll();
-});
-
-el.btnExport.addEventListener('click', exportCSV);
-el.btnExportJSON.addEventListener('click', exportJSON);
-el.btnExportYAML.addEventListener('click', exportYAML);
-
-/* modal */
-el.btnHelp.addEventListener('click', ()=>{
-  el.modalBack.style.display='flex';
-});
-el.btnClose.addEventListener('click', ()=>{
-  el.modalBack.style.display='none';
-});
-el.modalBack.addEventListener('click', (e)=>{
-  if(e.target===el.modalBack) el.modalBack.style.display='none';
-});
-
-/* init */
-updateDepState();
-renderExList();
-</script>
-</body>
-</html>
